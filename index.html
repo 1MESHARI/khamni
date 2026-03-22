@@ -149,15 +149,7 @@ body.dk .ml.g{color:#38bdf8;}
 .lgd{width:12px;height:12px;border-radius:3px;}
 
 /* KEYBOARD */
-.kb{background:var(--sf2);border-top:1px solid var(--brd);padding:4px 3px 8px;max-width:480px;width:100%;margin:0 auto;flex-shrink:0;}
-.kbr{display:flex;justify-content:center;gap:2px;margin-bottom:2px;}
-.kk{min-width:26px;height:32px;padding:0 2px;border-radius:5px;border:1px solid var(--brd);background:var(--sf);color:var(--tx);font-size:13px;font-weight:700;font-family:'Tajawal',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;user-select:none;}
-.kk:active{background:var(--slt);transform:scale(.92);}
-.kk.c{background:#0ea5e9;color:#fff;border-color:#0ea5e9;}
-.kk.x{background:var(--amb);color:#fff;border-color:var(--amb);}
-.kk.w{background:var(--sf2);color:var(--txd);}
-.kk.wd{min-width:38px;font-size:11px;}
-.kk.sub{background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border-color:#0284c7;min-width:46px;}
+
 
 /* SOLO END */
 .sec{padding:2rem 1.5rem;width:100%;max-width:400px;text-align:center;}
@@ -346,7 +338,7 @@ body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
     <div class="hr" id="sHist"></div>
     <div class="ml" id="sMsg"></div>
     <div class="ir">
-      <input class="gi" id="sInp" placeholder="اكتب..." maxlength="5" autocomplete="off" readonly>
+      <input class="gi" id="sInp" placeholder="اكتب الكلمة هنا..." maxlength="5" autocomplete="off" inputmode="text">
       <button class="gb" onclick="soloGuess()">✓</button>
     </div>
     <div class="lgr">
@@ -355,7 +347,6 @@ body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
       <div class="lg"><div class="lgd" style="background:var(--sf2);border:1px solid var(--brd)"></div>غلط</div>
     </div>
   </div>
-  <div class="kb" id="sKb"></div>
 </div>
 
 <!-- SOLO END -->
@@ -438,7 +429,7 @@ body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
       <div class="hr" id="hEl"></div>
       <div class="ml" id="mMsg"></div>
       <div class="ir">
-        <input class="gi" id="gI" placeholder="اكتب..." maxlength="5" autocomplete="off" readonly>
+        <input class="gi" id="gI" placeholder="اكتب الكلمة هنا..." maxlength="5" autocomplete="off" inputmode="text">
         <button class="gb" onclick="submitGuess()">✓</button>
       </div>
       <div class="lgr">
@@ -453,7 +444,6 @@ body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
       <div class="ws2">يخمّنون الكلمة الآن</div>
     </div>
   </div>
-  <div class="kb" id="mKb"></div>
 </div>
 
 <!-- END -->
@@ -773,7 +763,7 @@ var sW='',sLen=5,sHist=[],sUL={},sScore=0,sPend=0,sWins=0,sRnd=1,sActive=false;
 function startSolo(){
   var n=getName();if(!n)return;
   myN=n;sScore=0;sWins=0;sRnd=1;sActive=true;u4.clear();u5.clear();uC.clear();
-  go('s1');buildKB('sKb','sInp',{});newSRnd();
+  go('s1');newSRnd();
 }
 function quitSolo(){sActive=false;if(sScore>0||sWins>0)endSolo();else go('s0');}
 function newSRnd(){
@@ -785,7 +775,7 @@ function newSRnd(){
   document.getElementById('sInp').value='';
   document.getElementById('sInp').dataset.mx=sLen;
   document.getElementById('sInp').disabled=false;
-  setM('sMsg','','');renderSB();buildKB('sKb','sInp',{});
+  setM('sMsg','','');renderSB();
 }
 function renderSB(){
   var w=[...sW];
@@ -793,7 +783,7 @@ function renderSB(){
   document.getElementById('sWRow').innerHTML=rev.map(function(l){return '<div class="wb'+(l?' c':'')+'">'+( l||'')+'</div>';}).join('');
   document.getElementById('sHist').innerHTML=sHist.map(function(g){return '<div class="hrow">'+[...g.g].map(function(l,i){return '<div class="hb '+g.r[i]+'">'+l+'</div>';}).join('')+'</div>';}).join('');
   document.getElementById('sUsed').innerHTML=Object.keys(sUL).map(function(l){return '<div class="ul '+sUL[l]+'">'+l+'</div>';}).join('');
-  updKB('sKb',sUL);
+  
 }
 function soloGuess(){
   if(!sActive)return;
@@ -907,7 +897,7 @@ function onState(st){
     if(!document.getElementById('s3').classList.contains('on')){
       go('s3');
       lHist=(st.guesses[myIdx]||[]).slice();lUsed=bUsed(lHist);
-      buildKB('mKb','gI',lUsed);
+      
       document.getElementById('gI').dataset.mx=st.cLen||5;
     }
     renderGUI();return;
@@ -948,7 +938,7 @@ function renderGUI(){
   }else{
     mt.style.display='block';wt2.style.display='none';if(mk)mk.style.display='block';
     document.getElementById('gI').dataset.mx=st.cLen||5;
-    renderB();buildKB('mKb','gI',lUsed);
+    renderB();
   }
 }
 function renderB(){
@@ -957,7 +947,7 @@ function renderB(){
   document.getElementById('wRow').innerHTML=rev.map(function(l){return '<div class="wb'+(l?' c':'')+'">'+( l||'')+'</div>';}).join('');
   document.getElementById('hEl').innerHTML=lHist.map(function(g){return '<div class="hrow">'+[...g.g].map(function(l,i){return '<div class="hb '+g.r[i]+'">'+l+'</div>';}).join('')+'</div>';}).join('');
   document.getElementById('uLet').innerHTML=Object.keys(lUsed).map(function(l){return '<div class="ul '+lUsed[l]+'">'+l+'</div>';}).join('');
-  updKB('mKb',lUsed);
+  
 }
 function submitGuess(){
   if(!gState||gState.phase!=='play')return;
