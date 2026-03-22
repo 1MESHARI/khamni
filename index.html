@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>خمّني ولا تلخمني</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
 <style>
 :root{
   --sky:#0ea5e9;--sky-dark:#0284c7;--sky-border:#bae6fd;
@@ -564,12 +563,42 @@ const FB_CONFIG={
   appId:"1:375607221955:web:0e1551cc92328d0c478c76"
 };
 let fbDB=null,fbReady=false;
-try{
-  if(FB_CONFIG.apiKey&&FB_CONFIG.apiKey!=='FIREBASE_CONFIG_HERE'){
-    if(!firebase.apps.length)firebase.initializeApp(FB_CONFIG);
-    fbDB=firebase.database();fbReady=true;
-  }
-}catch(e){fbReady=false;console.log('Firebase offline, using localStorage');}
+
+function initFirebase(){
+  return new Promise(resolve=>{
+    try{
+      if(typeof firebase==='undefined'){resolve(false);return;}
+      if(FB_CONFIG.apiKey&&FB_CONFIG.apiKey!=='FIREBASE_CONFIG_HERE'){
+        if(!firebase.apps.length)firebase.initializeApp(FB_CONFIG);
+        fbDB=firebase.database();fbReady=true;
+      }
+      resolve(true);
+    }catch(e){fbReady=false;resolve(false);}
+  });
+}
+
+// Load Firebase dynamically so it doesn't block the game
+function loadFirebaseSDK(){
+  return new Promise(resolve=>{
+    const s1=document.createElement('script');
+    s1.src='https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js';
+    s1.onerror=()=>resolve(false);
+    s1.onload=()=>{
+      const s2=document.createElement('script');
+      s2.src='https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js';
+      s2.onerror=()=>resolve(false);
+      s2.onload=()=>initFirebase().then(resolve);
+      document.head.appendChild(s2);
+    };
+    document.head.appendChild(s1);
+  });
+}
+
+// Start Firebase in background - game works without it
+loadFirebaseSDK().then(ok=>{
+  if(ok)console.log('Firebase ready');
+  else console.log('Firebase unavailable - using localStorage');
+});
 
 // ═══ DARK MODE ═══
 (function(){const s=localStorage.getItem('khalamni_dark');if(s==='1')document.body.classList.add('dark');updateToggle();})();
