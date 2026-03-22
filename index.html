@@ -775,10 +775,9 @@ function startSolo(){
 function quitSolo(){sActive=false;if(sScore>0||sWins>0)endSolo();else go('s-home');}
 function newSRnd(){
   const wo=getWord();sW=wo.word;sLen=wo.len;
-  sHist=[];sUL={};sPend=0;
+  sHist=[];sUL={};sPend=0;sPend=0;
   document.getElementById('sRound').textContent='الجولة '+sRnd;
   document.getElementById('sScore').textContent=sScore;
-  document.getElementById('sPend').textContent='+0';
   document.getElementById('sWins').textContent=sWins;
   document.getElementById('sWL').textContent='كلمة من '+sLen+' حروف';
   document.getElementById('sInp').value='';
