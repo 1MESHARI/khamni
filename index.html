@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>خمّني ولا تلخمني</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3038589899794055" crossorigin="anonymous"></script>
 <style>
 :root{
   --sky:#0ea5e9;--sky-dark:#0284c7;--bord:#bae6fd;
@@ -122,10 +123,7 @@ body.dark .ml.g{color:#38bdf8;}
 .gi{flex:1;padding:10px 12px;border:1.5px solid var(--bord);border-radius:var(--rs);font-size:16px;font-weight:700;font-family:'Tajawal',sans-serif;color:var(--txt);background:var(--inp);outline:none;direction:rtl;}
 .gi:focus{border-color:var(--sky);}
 .gb{padding:10px 14px;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:white;border:none;border-radius:var(--rs);font-size:14px;font-weight:700;font-family:'Tajawal',sans-serif;cursor:pointer;}
-.hb2{padding:8px 10px;background:rgba(245,158,11,.12);color:var(--amber);border:1.5px solid var(--amber);border-radius:var(--rs);font-size:12px;font-weight:700;font-family:'Tajawal',sans-serif;cursor:pointer;white-space:nowrap;}
-.hb2:disabled{opacity:.4;cursor:default;}
-.hbox{background:rgba(245,158,11,.1);border:1.5px solid var(--amber);border-radius:var(--rs);padding:8px 12px;font-size:13px;color:var(--txt2);margin-bottom:.4rem;text-align:center;display:none;}
-.hbox.on{display:block;}
+
 
 /* ── LEGEND ── */
 .lgr{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:.3rem 0;}
@@ -292,7 +290,7 @@ body.dark #toast{background:#031525;border:1px solid #0ea5e9;}
   <div class="tb2">
     <div class="tc"><h3>🎯 الهدف</h3><p>خمّن الكلمة السرية قبل أن تنتهي محاولاتك الـ 6. الكلمة إما 4 أو 5 حروف.</p></div>
     <div class="tc"><h3>🎨 معنى الألوان</h3><div class="cl"><div class="cli"><div class="cld" style="background:#0ea5e9">ك</div><span>الحرف صح ومكانه صح (+2 نقطة)</span></div><div class="cli"><div class="cld" style="background:#f59e0b">ت</div><span>الحرف صح بس مكانه غلط (+1 نقطة)</span></div><div class="cli"><div class="cld" style="background:#94a3b8">ب</div><span>الحرف غلط</span></div></div></div>
-    <div class="tc"><h3>💡 التلميحات</h3><p>تقدر تطلب تلميح — لكن يُخصم منك 15 نقطة. ونقاطك ممكن تصير سالبة!</p></div>
+
     <div class="tc"><h3>🏆 النقاط</h3><p>الفائز فقط يحتفظ بنقاطه + 10 نقاط مكافأة. الخاسر يخسر نقاطه.</p></div>
 
     <div style="height:.5rem;"></div>
@@ -306,7 +304,7 @@ body.dark #toast{background:#031525;border:1px solid #0ea5e9;}
   <div class="sh">
     <div class="ss">
       <div class="sv"><div class="svn" id="sScore">0</div><div class="svl">نقاطك</div></div>
-      <div class="sv" style="border-color:rgba(251,191,36,.5);"><div class="svn" id="sPend" style="color:#fbbf24">+0</div><div class="svl" style="color:rgba(251,191,36,.8)">خطر</div></div>
+
       <div class="sv"><div class="svn" id="sWins">0</div><div class="svl">انتصارات</div></div>
     </div>
     <div class="srb" id="sRound">الجولة 1</div>
@@ -315,13 +313,13 @@ body.dark #toast{background:#031525;border:1px solid #0ea5e9;}
   <div class="sb2">
     <div style="text-align:center;font-size:12px;color:var(--txt2);margin-bottom:.4rem;" id="sWL"></div>
     <div class="wr" id="sWRow"></div>
-    <div class="hbox" id="sHBox"></div>
+    
     <div class="ul2" id="sUsed"></div>
     <div class="hr2" id="sHist"></div>
     <div class="ml" id="sMsg"></div>
     <div class="ir">
       <input class="gi" id="sInp" placeholder="اكتب..." maxlength="5" autocomplete="off" readonly>
-      <button class="hb2" id="sHBtn" onclick="useHint('solo')">💡 -15</button>
+      
       <button class="gb" onclick="soloGuess()">✓</button>
     </div>
     <div class="lgr">
@@ -383,16 +381,19 @@ body.dark #toast{background:#031525;border:1px solid #0ea5e9;}
 <div id="s-game" class="scr col">
   <div class="gt"><div class="sg2 n4" id="sGrid"></div><div class="rl" id="rLbl"></div></div>
   <div class="gb2">
-    <div class="tb3"><span class="tw" id="tbW"></span><span class="ta" id="tbA"></span></div>
+    <div class="tb3">
+      <span class="tw" id="tbW">⭐ خمّن الكلمة!</span>
+      <span class="ta" id="tbA">المحاولة 1/6</span>
+    </div>
     <div id="myT">
       <div class="wr" id="wRow"></div>
-      <div class="hbox" id="mHBox"></div>
+      
       <div class="ul2" id="uLet"></div>
       <div class="hr2" id="hEl"></div>
       <div class="ml" id="mMsg"></div>
       <div class="ir">
         <input class="gi" id="gI" placeholder="اكتب..." maxlength="5" autocomplete="off" readonly>
-        <button class="hb2" id="mHBtn" onclick="useHint('multi')">💡 -15</button>
+        
         <button class="gb" onclick="submitGuess()">✓</button>
       </div>
       <div class="lgr">
@@ -437,7 +438,18 @@ body.dark #toast{background:#031525;border:1px solid #0ea5e9;}
       <button class="atab" onclick="aTab('a')">إضافة</button>
       <button class="atab" onclick="aTab('s')">إعدادات</button>
     </div>
-    <div id="a-w"><div style="font-size:13px;color:var(--txt2);margin-bottom:.75rem;">الكلمات المضافة (<span id="wCnt">0</span>)</div><div id="wList"></div></div>
+    <div id="a-w">
+  <div style="display:flex;gap:8px;margin-bottom:.75rem;flex-wrap:wrap;align-items:center;">
+    <input class="fi" id="wFilter" placeholder="بحث..." style="flex:1;min-width:120px;font-size:13px;" oninput="renderAW()">
+    <select class="fi" id="wLenF" style="width:auto;font-size:13px;" onchange="renderAW()">
+      <option value="all">الكل</option>
+      <option value="4">4 حروف</option>
+      <option value="5">5 حروف</option>
+    </select>
+    <span style="font-size:13px;color:var(--txt2);white-space:nowrap;">(<span id="wCnt">0</span>)</span>
+  </div>
+  <div id="wList"></div>
+</div>
     <div id="a-a" style="display:none;">
       <div class="awf">
         <label class="fl">الكلمة (4 أو 5 حروف)</label>
@@ -531,9 +543,9 @@ function go(id){
 // ══════════════════════════════════════
 // WORDS
 // ══════════════════════════════════════
-const W4=["نهر","بحر","جبل","قمر","نجم","شمس","أرض","بيت","باب","قلب","عين","طير","سمك","ماء","نار","ذهب","فضة","حجر","رمل","برد","ريح","غيم","مطر","ثلج","ليل","نهار","صيف","فجر","غرب","شرق","دار","حوش","سقف","نور","صوت","لون","طعم","قوة","بحر","نيل","ملح","عسل","قهوة","لبن","تمر","رمح","سيف","درع","تاج","حكم","علم","شعر","فكر","قلم","كتب","رسم","غناء","دعاء","صبر","شكر","حلم","عزم","همم","وفاء","حياء","كرم","شجع","صدق"];
-const W5=["كتاب","قلعة","شمال","نهار","بحار","مدرس","جمال","سماء","فرحة","كرسي","عقرب","جبال","وادي","قلوب","حياة","طيور","نجوم","مكتب","حديد","وردة","قطعة","لعبة","صديق","قرية","مسجد","رحلة","خيمة","شعور","مطبخ","تراث","عطور","فتاة","شاطئ","جنوب","غروب","شروق","خريف","ربيع","صيام","صلاة","حكمة","فريق","صحبة","أحلام","بريق","ذكاء","شجاعة","أمانة","صدقة","زيارة","سينما","أغنية","طبيعة","مكتبة","رياضة","حقيبة","مطعم","مطار","حلوى","غابة","مدينة","فانوس","كنوز","نسيم","بريد","نخلة","سحاب","أمير","قائد","أزهار","ليمون","تمرة","مسرح","ميناء","فضاء","نبضة","فكرة","أمواج","حوار","حرية","نصر"];
-const HINTS={"كتاب":"تقرأ منه","قلعة":"حصن قديم","شمال":"اتجاه بوصلة","نهار":"وقت النور","بحار":"ملاح السفن","مدرس":"يعلّم الطلاب","سماء":"فوق رأسك","كرسي":"تجلس عليه","حياة":"ضد الموت","طيور":"تطير في الهواء","نجوم":"تضيء الليل","مكتب":"تعمل عليه","وردة":"زهرة جميلة","لعبة":"تلعبها","صديق":"تحبه وتثق به","مسجد":"مكان الصلاة","رحلة":"سفر وتنقل","شعور":"إحساس داخلي","مطبخ":"تطبخ فيه","شاطئ":"حافة البحر","خريف":"فصل سقوط الأوراق","ربيع":"فصل الأزهار","صيام":"الامتناع عن الطعام","حكمة":"عمق التفكير","أحلام":"تراها نائماً","ذكاء":"سرعة الفهم","أمانة":"الصدق والوفاء","سينما":"تشاهد فيها الأفلام","أغنية":"تُغنّيها أو تسمعها","مكتبة":"مليئة بالكتب","رياضة":"تقوّي الجسم","حقيبة":"تحمل فيها أغراضك","مطعم":"تأكل فيه","مطار":"تسافر منه","حلوى":"طعم حلو","غابة":"أشجار كثيرة","مدينة":"أكبر من قرية","فضاء":"خارج الأرض","فكرة":"تخطر بالبال","أمواج":"حركة البحر","حوار":"نقاش بين شخصين","حرية":"ضد القيد"};
+const W4=["نهر","بحر","جبل","قمر","نجم","شمس","أرض","بيت","باب","قلب","عين","طير","سمك","ماء","نار","ذهب","فضة","حجر","رمل","برد","ريح","غيم","مطر","ثلج","ليل","صيف","فجر","غرب","شرق","دار","سقف","نور","صوت","لون","طعم","قوة","نيل","ملح","عسل","لبن","تمر","رمح","سيف","درع","تاج","حكم","علم","شعر","فكر","قلم","رسم","صبر","شكر","حلم","عزم","وفاء","كرم","صدق","سهل","واد","بئر","نخل","تين","عنب","رمان","زيت","دقق","خبز","أرز","لحم","دجج","بيض","ورق","قصب","حطب","صخر","طين","نحل","عسل","قرد","أسد","نمر","ثعل","ذئب","غزل","حمل","بقر","جمل","خيل","حمر","كبش","ديك","بطة","نسر","صقر","حمام","فيل","زرف","أخ","أم","أب","ابن","بنت","عم","خال","جد","زوج","بنت","قوم","شعب","جيش","ملك","أمير","وزير","قاض","تاجر","فلح","صياد","طباخ","حارس","سارق","طفل","شاب","كهل","شيخ","حي","ميت","صحة","مرض","دواء","جرح","ألم","دمع","فرح","غضب","خوف","أمل","حزن","عقل","روح","نفس","جسد","يد","رجل","ظهر","بطن","صدر","رأس","عنق","فم","أنف","أذن","شفة","لحية","شعر","قدم","ركبة","ساق","ذراع","مرفق","كتف","حاجب","جفن","حدق","خد","جبهة","فك","لسان","سن","حلق","صدر","ضلع","كبد","قلب","رئة","معدة","كلية","دم","عظم","عصب","جلد","ظفر","شفاء","مرهم","حمى","سعال","دوار","إغماء","شلل","صمم","عمى","بكم"];
+const W5=["كتاب","قلعة","شمال","نهار","بحار","مدرس","جمال","سماء","فرحة","كرسي","عقرب","جبال","وادي","قلوب","حياة","طيور","نجوم","مكتب","حديد","وردة","قطعة","لعبة","صديق","قرية","مسجد","رحلة","خيمة","شعور","مطبخ","تراث","عطور","فتاة","شاطئ","جنوب","غروب","شروق","خريف","ربيع","صيام","صلاة","حكمة","فريق","صحبة","أحلام","بريق","ذكاء","أمانة","صدقة","زيارة","سينما","أغنية","طبيعة","مكتبة","رياضة","حقيبة","مطعم","مطار","حلوى","غابة","مدينة","فانوس","كنوز","نسيم","بريد","نخلة","سحاب","قائد","أزهار","ليمون","مسرح","ميناء","فضاء","نبضة","فكرة","أمواج","حوار","حرية","نصر","خيال","أسرة","ملعب","حصان","قصيدة","رسالة","نافذة","مدرسة","طريق","حديقة","سيارة","طائرة","سفينة","قطار","دراجة","مصنع","متجر","سوبر","مكتبة","ملابس","حذاء","قميص","بنطال","عباءة","شماغ","غترة","ساعة","هاتف","حاسوب","لوحة","مفتاح","قفل","نافذة","شباك","درجات","سلالم","مصعد","سرداب","قبو","سطح","شرفة","حائط","أرضية","سقيفة","حديقة","مسبح","ملعب","ميدان","ساحة","شارع","طريق","جسور","نفق","مطار","ميناء","محطة","موقف","مسجد","كنيسة","معبد","قصر","برجان","منارة","قلعة","حصون","مقبرة","متحف","مسرح","سينما","مكتبة","ملعب","ستاد","حديقة","بستان","مزرعة","حقول","غابات","صحراء","جبال","وديان","شلال","بحيرة","خليج","جزيرة","شاطئ","مرسى","موجات","رياح","عاصفة","سحابة","رعود","برقوق","أمطار","ثلوج","ضباب","شمسية","مظلة","معطف","قفاز","وشاح","قلادة","خاتم","سوار","حلقة","دبوس","مشبك","حقيبة","محفظة","شنطة","صندوق","سلة","طبقات","أطباق","كوباية","ملعقة","شوكة","سكينة","صحون","قدرية","طاجن","مقلاة","فرنية","ثلاجة","غسالة","مكيفات","مروحة","تلفاز","راديو","مسجلة","كاميرا","مصباح","شمعة","بطارية","محرك","مولدات","أنابيب","صنبور","خزان","مضخة","محولات","كابلات","شبكات","أقمار","صواريخ","مركبة","قمرية","منظار","مجهر","ميزان","مسطرة","بوصلة","ساعات","تقويم","خريطة","كتيب","مجلة","جريدة","قاموس","معجم","دستور","قانون","عقود","وثائق","رخصة","جواز","هوية","بطاقة","نقود","عملات","دفاتر","شيكات","فاتورة","إيصال","تذكرة","تصريح","شهادة","دبلوم","وسام","ميدالية","كأسية","درعية","جائزة","تمثال","لوحات","صورة","رسمة","نحتية","خزفية","سجادة","ستارة","وسادة","مخدة","بطانية","ملاءة","شراشف","منشفة","إسفنج","صابون","شامبو","معجون","فرشاة","مقصات","مشط","مرآة","حوض","دشاش","مغسلة","مرحاض","خزانة","دولاب","مكتبة","رف","طاولة","مقعد","أريكة","سرير","فراش"];
+const HINTS={};
 let customW=[];
 const u4=new Set(),u5=new Set(),uC=new Set();
 
@@ -642,15 +654,71 @@ function aTab(t){
   if(t==='w')renderAW();
 }
 function renderAW(){
-  const l=document.getElementById('wList');document.getElementById('wCnt').textContent=customW.length;
-  l.innerHTML=customW.length?customW.map(w=>`<div class="wi"><div class="wt">${w.word}</div><div class="wh">${w.hint||'—'}</div><div class="wl">${w.len}ح</div><button class="wd2" onclick="delW(${w.id})">🗑️</button></div>`).join(''):'<div style="text-align:center;padding:1rem;color:var(--txtd);font-size:13px;">لا توجد كلمات مضافة بعد</div>';
+  const l=document.getElementById('wList');
+  // Build full word list: built-in + custom
+  const builtIn4=W4.filter(w=>[...w].length===4).map(w=>({word:w,hint:HINTS[w]||'',len:4,builtin:true}));
+  const builtIn5=W5.filter(w=>[...w].length===5).map(w=>({word:w,hint:HINTS[w]||'',len:5,builtin:true}));
+  const allWords=[...customW,...builtIn5,...builtIn4];
+  document.getElementById('wCnt').textContent=allWords.length;
+  
+  // Filter
+  const fv=document.getElementById('wFilter')?document.getElementById('wFilter').value.trim():'';
+  const fl=document.getElementById('wLenF')?document.getElementById('wLenF').value:'all';
+  let filtered=allWords.filter(w=>{
+    const matchTxt=!fv||(w.word.includes(fv)||( w.hint&&w.hint.includes(fv)));
+    const matchLen=fl==='all'||(fl==='4'&&w.len===4)||(fl==='5'&&w.len===5);
+    return matchTxt&&matchLen;
+  });
+  
+  if(!filtered.length){l.innerHTML='<div style="text-align:center;padding:1rem;color:var(--txtd);font-size:13px;">لا توجد كلمات</div>';return;}
+  
+  l.innerHTML=filtered.map(w=>`
+    <div class="wi" id="wi_${w.builtin?'b_'+w.word:'c_'+w.id}">
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+          <span class="wt">${w.word}</span>
+          <span class="wl">${w.len}ح</span>
+          ${w.builtin?'<span style="font-size:10px;color:var(--txtd);background:var(--surf2);padding:1px 6px;border-radius:8px;">أساسية</span>':'<span style="font-size:10px;color:#10b981;background:rgba(16,185,129,.1);padding:1px 6px;border-radius:8px;">مضافة</span>'}
+        </div>
+        <div id="hint_${w.builtin?'b_'+w.word:'c_'+w.id}" style="font-size:12px;color:var(--txt2);">${w.hint||'<span style="color:var(--txtd)">لا يوجد تلميح</span>'}</div>
+        <div id="edit_${w.builtin?'b_'+w.word:'c_'+w.id}" style="display:none;margin-top:6px;">
+          <input class="fi" style="margin-bottom:5px;font-size:13px;" placeholder="التلميح..." value="${w.hint||''}" id="hinput_${w.builtin?'b_'+w.word:'c_'+w.id}">
+          <button class="btn btnp" style="padding:6px;font-size:13px;margin:0;" onclick="saveHint('${w.builtin?'b_'+w.word:'c_'+w.id}','${w.word}',${w.builtin},${w.id||0})">حفظ</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;align-items:center;">
+        <button class="wd2" onclick="toggleEdit('${w.builtin?'b_'+w.word:'c_'+w.id}')" style="color:var(--sky-dark)">✏️</button>
+        ${!w.builtin?`<button class="wd2" onclick="delW(${w.id})">🗑️</button>`:''}
+      </div>
+    </div>`).join('');
+}
+function toggleEdit(id){
+  const e=document.getElementById('edit_'+id);
+  if(e)e.style.display=e.style.display==='none'?'block':'none';
+}
+async function saveHint(id,word,builtin,cid){
+  const inp=document.getElementById('hinput_'+id);
+  if(!inp)return;
+  const hint=inp.value.trim();
+  if(builtin){
+    // Save as override in custom words
+    const existing=customW.find(w=>w.word===word);
+    if(existing){existing.hint=hint;if(FBok){try{await DB.ref('cw/'+existing.id).update({hint});}catch(e){}}}
+    else{const e={word,hint,len:[...word].length,id:Date.now()};if(FBok){try{await DB.ref('cw/'+e.id).set(e);}catch(er_){}}customW.push(e);}
+    HINTS[word]=hint;
+  }else{
+    const w=customW.find(w=>w.id===cid);if(w){w.hint=hint;if(FBok){try{await DB.ref('cw/'+cid).update({hint});}catch(e){}}}
+  }
+  localStorage.setItem('kw',JSON.stringify(customW));
+  document.getElementById('hint_'+id).innerHTML=hint||'<span style="color:var(--txtd)">لا يوجد تلميح</span>';
+  toggleEdit(id);toast('تم الحفظ ✅');
 }
 async function addWord(){
   const w=document.getElementById('nW').value.trim(),h=document.getElementById('nH').value.trim();
   if(!w){toast('أدخل الكلمة');return;}
   const len=[...w].length;if(len!==4&&len!==5){toast('الكلمة يجب أن تكون 4 أو 5 حروف');return;}
   const e={word:w,hint:h,len,id:Date.now()};
-  if(FBok){try{await DB.ref('cw/'+e.id).set(e);}catch(er){}}
+  if(FBok){try{await DB.ref('cw/'+e.id).set(e);}catch(er_){}}
   customW.push(e);localStorage.setItem('kw',JSON.stringify(customW));
   document.getElementById('nW').value='';document.getElementById('nH').value='';
   toast('تمت الإضافة ✅');renderAW();
@@ -669,8 +737,8 @@ async function resetLB(){if(!confirm('مسح لوحة الصدارة؟'))return;
 let myN='',myId='p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 let rCode='',isHost=false,gState=null,myIdx=-1;
 let lHist=[],lUsed={},pTimer=null,lastS='';
-let sW='',sHint='',sLen=5,sHist=[],sUL={},sScore=0,sPend=0,sWins=0,sRnd=1,sActive=false,sHU=false;
-let mHU=false;
+let sW='',sLen=5,sHist=[],sUL={},sScore=0,sWins=0,sRnd=1,sActive=false;
+let 
 
 // ══════════════════════════════════════
 // NAVIGATION HELPERS
@@ -690,24 +758,8 @@ function switchTab(t){
   document.getElementById('tb-j').style.display=t==='join'?'block':'none';
 }
 
-// ══════════════════════════════════════
-// HINT
-// ══════════════════════════════════════
-function useHint(mode){
-  if(mode==='solo'){
-    if(sHU){toast('استخدمت التلميح!');return;}
-    if(!sHint){toast('لا يوجد تلميح');return;}
-    sHU=true;sPend-=15;
-    document.getElementById('sPend').textContent=(sPend>=0?'+':'')+sPend;
-    const hb=document.getElementById('sHBox');hb.textContent='💡 '+sHint;hb.classList.add('on');
-    document.getElementById('sHBtn').disabled=true;
-    setM('sMsg','تلميح! -15 نقطة','b');
-  }else{
+else{
     if(mHU){toast('استخدمت التلميح!');return;}
-    const st=readS();if(!st||!st.cHint){toast('لا يوجد تلميح');return;}
-    mHU=true;st.rPts[myIdx]=(st.rPts[myIdx]||0)-15;
-    const hb=document.getElementById('mHBox');hb.textContent='💡 '+st.cHint;hb.classList.add('on');
-    document.getElementById('mHBtn').disabled=true;
     saveR(st);
   }
 }
@@ -722,8 +774,8 @@ function startSolo(){
 }
 function quitSolo(){sActive=false;if(sScore>0||sWins>0)endSolo();else go('s-home');}
 function newSRnd(){
-  const wo=getWord();sW=wo.word;sHint=wo.hint;sLen=wo.len;
-  sHist=[];sUL={};sPend=0;sHU=false;
+  const wo=getWord();sW=wo.word;sLen=wo.len;
+  sHist=[];sUL={};sPend=0;
   document.getElementById('sRound').textContent='الجولة '+sRnd;
   document.getElementById('sScore').textContent=sScore;
   document.getElementById('sPend').textContent='+0';
@@ -732,8 +784,8 @@ function newSRnd(){
   document.getElementById('sInp').value='';
   document.getElementById('sInp').dataset.mx=sLen;
   document.getElementById('sInp').disabled=false;
-  document.getElementById('sHBtn').disabled=!sHint;
-  document.getElementById('sHBox').classList.remove('on');
+  
+  
   setM('sMsg','','');renderSB();buildKB('sKb','sInp',{});
 }
 function renderSB(){
@@ -751,11 +803,11 @@ function soloGuess(){
   document.getElementById('sInp').value='';
   const r=evalG(v,sW);let pts=r.reduce((s,x)=>s+(x==='c'?2:x==='x'?1:0),0);
   sHist.push({g:v,r});sUL=bUsed(sHist);sPend+=pts;
-  document.getElementById('sPend').textContent=(sPend>=0?'+':'')+sPend;
+  
   const won=r.every(x=>x==='c'),out=sHist.length>=6;
   renderSB();
-  if(won){const tot=sPend+10;sScore+=tot;sWins++;document.getElementById('sScore').textContent=sScore;document.getElementById('sPend').textContent='✓ +'+tot;document.getElementById('sWins').textContent=sWins;setM('sMsg','🎉 صحيح! +'+tot+' نقطة','g');document.getElementById('sInp').disabled=true;sRnd++;if(sWins>=5||sRnd>10)setTimeout(endSolo,1200);else setTimeout(()=>{setM('sMsg','الكلمة التالية...','g');setTimeout(newSRnd,900);},1000);return;}
-  if(out){document.getElementById('sPend').textContent='✗ '+sPend;setM('sMsg','خسرت '+sPend+' نقطة! الكلمة: '+sW,'b');document.getElementById('sInp').disabled=true;sRnd++;if(sRnd>10)setTimeout(endSolo,1800);else setTimeout(()=>{setM('sMsg','جولة جديدة...','');setTimeout(newSRnd,900);},1500);return;}
+  if(won){const tot=sPend+10;sScore+=tot;sWins++;document.getElementById('sScore').textContent=sScore;document.getElementById('sWins').textContent=sWins;setM('sMsg','🎉 صحيح! +'+tot+' نقطة','g');document.getElementById('sInp').disabled=true;sRnd++;if(sWins>=5||sRnd>10)setTimeout(endSolo,1200);else setTimeout(()=>{setM('sMsg','الكلمة التالية...','g');setTimeout(newSRnd,900);},1000);return;}
+  if(out){setM('sMsg','خسرت '+sPend+' نقطة! الكلمة: '+sW,'b');document.getElementById('sInp').disabled=true;sRnd++;if(sRnd>10)setTimeout(endSolo,1800);else setTimeout(()=>{setM('sMsg','جولة جديدة...','');setTimeout(newSRnd,900);},1500);return;}
   setM('sMsg',pts>0?'+'+pts+' مؤقت ('+sPend+' في الخطر)':'لا توجد حروف صح',pts>0?'g':'');
 }
 async function endSolo(){
@@ -779,7 +831,7 @@ function createRoom(){
   const n=getName();if(!n)return;myN=n;
   rCode=genCode();isHost=true;myIdx=0;
   const wt=parseInt(document.getElementById('wt').value);
-  const st={rc:rCode,wt,phase:'wait',players:[{id:myId,name:myN,score:0,wins:0}],host:myId,cW:'',cHint:'',cLen:5,rnd:1,cur:0,guesses:{},rPts:{},done:[],at:Date.now()};
+  const st={rc:rCode,wt,phase:'wait',players:[{id:myId,name:myN,score:0,wins:0}],host:myId,cW:'',cLen:5,rnd:1,cur:0,guesses:{},rPts:{},done:[],at:Date.now()};
   saveR(st);gState=st;startPoll();showWait();
 }
 
@@ -846,7 +898,7 @@ function onState(st){
   gState=st;myIdx=st.players.findIndex(p=>p.id===myId);
   if(st.phase==='wait'){if(document.getElementById('s-wait').classList.contains('on'))renderWait();else showWait();return;}
   if(st.phase==='play'){
-    if(!document.getElementById('s-game').classList.contains('on')){go('s-game');lHist=(st.guesses[myIdx]||[]).slice();lUsed=bUsed(lHist);mHU=false;buildKB('mKb','gI',lUsed);document.getElementById('gI').dataset.mx=st.cLen||5;}
+    if(!document.getElementById('s-game').classList.contains('on')){go('s-game');lHist=(st.guesses[myIdx]||[]).slice();lUsed=bUsed(lHist);buildKB('mKb','gI',lUsed);document.getElementById('gI').dataset.mx=st.cLen||5;}
     renderGUI();return;
   }
   if(st.phase==='rend'){showREnd(st);return;}
@@ -857,25 +909,41 @@ function onState(st){
 // MULTIPLAYER GAME
 // ══════════════════════════════════════
 function startRnd(st){
-  const wo=getWord();st.cW=wo.word;st.cHint=wo.hint||'';st.cLen=wo.len;
-  const n=st.players.length;st.phase='play';st.cur=(st.rnd-1)%n;
+  const wo=getWord();st.cW=wo.word;st.cLen=wo.len;
+  const n=st.players.length;st.phase='play';
   st.guesses={};st.rPts={};st.done=[];st.winner=null;
   for(let i=0;i<n;i++){st.guesses[i]=[];st.rPts[i]=0;}
-  lHist=[];lUsed={};mHU=false;saveR(st);gState=st;
+  lHist=[];lUsed={};saveR(st);gState=st;
 }
 
 function renderGUI(){
-  if(!gState)return;const st=gState,n=st.players.length,cur=st.cur;
-  const md=st.done.includes(myIdx),im=myIdx===cur&&!md;
+  if(!gState)return;const st=gState,n=st.players.length;
+  const myDone=st.done.includes(myIdx);
   const g=document.getElementById('sGrid');g.className='sg2 n'+n;
-  g.innerHTML=st.players.map((p,i)=>{const pd=st.rPts[i]||0;const ps=pd!==0?` <span style="font-size:9px;color:#fbbf24">(${pd>=0?'+':''}${pd})</span>`:'';return`<div class="sc3${i===cur?' on2':''}${i===myIdx?' me':''}"><div class="sn3">${p.name}</div><div class="sp3">${p.score}${ps}</div><div class="sw3">🏆${p.wins}</div></div>`;}).join('');
-  document.getElementById('rLbl').textContent='الجولة '+st.rnd+' · فوز بـ '+st.wt+' جولات';
-  const cp=st.players[cur];document.getElementById('tbW').textContent=im?'⭐ دورك!':`دور ${cp.name}`;
-  const mg=st.guesses[myIdx]||[];document.getElementById('tbA').textContent='المحاولة '+Math.min(mg.length+1,6)+'/6';
+  // Scores — highlight players who finished
+  g.innerHTML=st.players.map((p,i)=>{
+    const pd=st.rPts[i]||0;
+    const done=st.done.includes(i);
+    const won=st.winner===i;
+    const ps=pd!==0?` <span style="font-size:9px;color:#fbbf24">(${pd>=0?'+':''}${pd})</span>`:'';
+    const badge=won?'🏆':done?'✓':'';
+    return`<div class="sc3${won?' on2':''}${i===myIdx?' me':''}"><div class="sn3">${p.name} ${badge}</div><div class="sp3">${p.score}${ps}</div><div class="sw3">🎯${p.wins}</div></div>`;
+  }).join('');
+  document.getElementById('rLbl').textContent='الجولة '+st.rnd+' · فوز بـ '+st.wt+' جولات · '+st.done.length+'/'+n+' انتهوا';
+  const mg=st.guesses[myIdx]||[];
+  document.getElementById('tbW').textContent=myDone?'⏳ في انتظار الآخرين...':'⭐ خمّن الكلمة!';
+  document.getElementById('tbA').textContent='المحاولة '+Math.min(mg.length+1,6)+'/6';
   const mt=document.getElementById('myT'),wt2=document.getElementById('wT'),mk=document.getElementById('mKb');
-  if(md){mt.style.display='none';wt2.style.display='flex';if(mk)mk.style.display='none';document.getElementById('wW').textContent=st.done.length<n?`${cp.name} يلعب الآن`:'انتهت الجولة!';return;}
-  if(im){mt.style.display='block';wt2.style.display='none';if(mk)mk.style.display='block';document.getElementById('gI').dataset.mx=st.cLen||5;document.getElementById('mHBtn').disabled=!st.cHint||mHU;renderB();buildKB('mKb','gI',lUsed);}
-  else{mt.style.display='none';wt2.style.display='flex';if(mk)mk.style.display='none';document.getElementById('wW').textContent=`${cp.name} يلعب الآن`;}
+  if(myDone){
+    mt.style.display='none';wt2.style.display='flex';if(mk)mk.style.display='none';
+    const left=n-st.done.length;
+    document.getElementById('wW').textContent=left>0?'في انتظار '+left+' لاعب...':'انتهت الجولة!';
+  }else{
+    mt.style.display='block';wt2.style.display='none';if(mk)mk.style.display='block';
+    document.getElementById('gI').dataset.mx=st.cLen||5;
+    
+    renderB();buildKB('mKb','gI',lUsed);
+  }
 }
 
 function renderB(){
@@ -900,7 +968,9 @@ function evalG(guess,word){
 function setM(id,txt,cls){const e=document.getElementById(id);if(!e)return;e.textContent=txt;e.className='ml'+(cls?' '+cls:'');}
 
 function submitGuess(){
-  if(!gState||gState.phase!=='play')return;const st=readS();if(!st)return;
+  if(!gState||gState.phase!=='play')return;
+  if(gState.done.includes(myIdx)){setM('mMsg','انتهيت من هذه الجولة — انتظر الآخرين','b');return;}
+  const st=readS();if(!st)return;
   const v=document.getElementById('gI').value.trim();if(!v)return;
   const wlen=st.cLen||5;if([...v].length!==wlen){setM('mMsg','الكلمة يجب أن تكون '+wlen+' حروف!','b');return;}
   document.getElementById('gI').value='';
@@ -908,30 +978,51 @@ function submitGuess(){
   lHist.push({g:v,r});lUsed=bUsed(lHist);
   const won=r.every(x=>x==='c'),out=lHist.length>=6;
   st.guesses[myIdx]=lHist.slice();st.rPts[myIdx]=(st.rPts[myIdx]||0)+pts;
-  if(won){st.rPts[myIdx]+=10;st.players[myIdx].wins=(st.players[myIdx].wins||0)+1;st.winner=myIdx;st.done.push(myIdx);setM('mMsg','🎉 خمّنتها! ستحصل على '+st.rPts[myIdx]+' نقطة','g');endT(st,true);return;}
-  if(out){st.done.push(myIdx);setM('mMsg','انتهت محاولاتك! خسرت '+st.rPts[myIdx]+' نقطة','b');endT(st,false);return;}
+  if(won){
+    // First to win gets +10 bonus, others continue
+    st.rPts[myIdx]+=10;
+    if(st.winner===null||st.winner===undefined)st.winner=myIdx; // first winner
+    st.players[myIdx].wins=(st.players[myIdx].wins||0)+1;
+    st.done.push(myIdx);
+    setM('mMsg','🎉 خمّنتها! +'+st.rPts[myIdx]+' نقطة','g');
+    // Check if all done or round should end
+    checkRndEnd(st);return;
+  }
+  if(out){
+    st.done.push(myIdx);
+    setM('mMsg','انتهت محاولاتك! خسرت '+st.rPts[myIdx]+' نقطة','b');
+    checkRndEnd(st);return;
+  }
   setM('mMsg',pts>0?'+'+pts+' مؤقت ('+st.rPts[myIdx]+' في الخطر)':'لا توجد حروف صح',pts>0?'g':'');
   saveR(st);gState=st;renderB();
 }
 
-function endT(st,won){
+function checkRndEnd(st){
   const n=st.players.length;
-  if(won)for(let i=0;i<n;i++)if(!st.done.includes(i))st.done.push(i);
-  let nx=-1;if(!won)for(let i=1;i<=n;i++){const c=(st.cur+i)%n;if(!st.done.includes(c)){nx=c;break;}}
-  if(nx===-1||won){const ov=st.players.some(p=>p.wins>=st.wt);st.phase=ov?'over':'rend';if(st.winner!=null)st.players[st.winner].score=(st.players[st.winner].score||0)+st.rPts[st.winner];}
-  else st.cur=nx;
-  saveR(st);gState=st;
-  if(st.phase==='play')renderGUI();
-  else if(st.phase==='rend')setTimeout(()=>showREnd(st),900);
-  else setTimeout(()=>showOver(st),900);
+  const allDone=st.done.length>=n;
+  // End round if: all done, OR winner found (everyone else can still play for points)
+  // We end when all done
+  if(allDone){
+    const ov=st.players.some(p=>p.wins>=st.wt);
+    st.phase=ov?'over':'rend';
+    if(st.winner!=null)st.players[st.winner].score=(st.players[st.winner].score||0)+st.rPts[st.winner];
+    saveR(st);gState=st;
+    if(st.phase==='rend')setTimeout(()=>showREnd(st),900);
+    else setTimeout(()=>showOver(st),900);
+  }else{
+    saveR(st);gState=st;renderGUI();
+  }
 }
+
+
 
 function showREnd(st){
   const w=st.winner!=null?st.players[st.winner]:null;
+  const wCount=st.players.filter((_,i)=>st.done.includes(i)&&st.guesses[i]&&st.guesses[i].length>0&&st.guesses[i][st.guesses[i].length-1].r.every(x=>x==='c')).length;
   document.getElementById('endTr').textContent=w?'🎉':'🔄';
-  document.getElementById('endTi').textContent=w?w.name+' فاز بالجولة!':'نهاية الجولة '+st.rnd;
+  document.getElementById('endTi').textContent=w?'🏆 '+w.name+' خمّنها أول!':'نهاية الجولة '+st.rnd;
   document.getElementById('endW').textContent='الكلمة كانت: '+st.cW;
-  renderRes(st);const b=document.getElementById('endNB');b.textContent='ابدأ الجولة '+(st.rnd+1);
+  renderRes(st);const b=document.getElementById('endNB');b.textContent='الجولة التالية →';
   b.onclick=()=>{if(!isHost){toast('المضيف فقط يمكنه البدء');return;}const s=readS();s.rnd++;startRnd(s);};go('s-end');
 }
 function showOver(st){
@@ -943,7 +1034,16 @@ function showOver(st){
 }
 function renderRes(st){
   const mx=Math.max(...st.players.map(p=>p.wins)),wi=st.winner;
-  document.getElementById('resG').innerHTML=st.players.map((p,i)=>{const ch=p.wins===mx&&mx>0;const iw=i===wi;const rp=st.rPts[i]||0;const pb=iw?`<div style="font-size:11px;color:#0ea5e9;font-weight:700">+${rp} ✓</div>`:rp>0?`<div style="font-size:11px;color:#ef4444;font-weight:700">-${rp} ✗</div>`:'';return`<div class="rc${ch?' ch':''}"> ${ch?'<div class="rcr">👑</div>':''}<div class="rcn">${p.name}</div><div class="rcp">${p.score}</div>${pb}<div class="rcw">🏆 ${p.wins} جولات</div></div>`;}).join('');
+  document.getElementById('resG').innerHTML=st.players.map((p,i)=>{
+    const ch=p.wins===mx&&mx>0;const iw=i===wi;const rp=st.rPts[i]||0;
+    // Check if player guessed correctly
+    const gs=st.guesses[i]||[];const gotIt=gs.length>0&&gs[gs.length-1].r.every(x=>x==='c');
+    const pb=iw?`<div style="font-size:11px;color:#0ea5e9;font-weight:700">🏆 أول من خمّن! +${rp}</div>`:
+              gotIt?`<div style="font-size:11px;color:#10b981;font-weight:700">✓ خمّنها +${rp}</div>`:
+              rp>0?`<div style="font-size:11px;color:#ef4444;font-weight:700">✗ خسر ${rp} نقطة</div>`:
+              `<div style="font-size:11px;color:var(--txtd)">لم يخمّن</div>`;
+    return`<div class="rc${ch?' ch':''}"> ${ch?'<div class="rcr">👑</div>':''}<div class="rcn">${p.name}</div><div class="rcp">${p.score}</div>${pb}<div class="rcw">🎯 ${p.wins} جولات</div></div>`;
+  }).join('');
 }
 
 // ══════════════════════════════════════
