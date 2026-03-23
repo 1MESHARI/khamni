@@ -1042,7 +1042,10 @@ function drawGame(){
   var st=gState;
   if(!st||!document.getElementById('s3').classList.contains('on'))return;
   var myDone=st.done&&st.done.indexOf(myIdx)>=0;
-  var wLen=parseInt(st.cLen)||5;
+  var wLen=5;
+  if(st.cLen)wLen=parseInt(st.cLen);
+  else if(st.cW&&st.cW.length>0)wLen=[...st.cW].length;
+  if(!wLen||wLen<4||wLen>6)wLen=5;
   var w=(st.cW&&st.cW.length>0)?[...st.cW]:[];
   // Score grid
   var sg=document.getElementById('sGrid');
@@ -1057,13 +1060,15 @@ function drawGame(){
   }
   var rl=document.getElementById('rLbl');
   if(rl)rl.textContent='الجولة '+st.rnd+' · فوز بـ '+st.wt+' جولات · '+st.done.length+'/'+st.players.length+' انتهوا';
-  // Word boxes
+  // Word boxes - always show
   var wRow=document.getElementById('wRow');
   if(wRow){
     var wHtml='';
-    for(var wi=0;wi<wLen;wi++){
+    // Force at least 4 boxes
+    var safeLen=(wLen>=4&&wLen<=6)?wLen:5;
+    for(var wi=0;wi<safeLen;wi++){
       var rev=w.length>wi&&lHist.length>0&&lHist.some(function(g){return g.r&&g.r[wi]==='c';});
-      wHtml+='<div class="wb'+(rev?' c':'')+'">'+( rev?w[wi]:'')+' </div>';
+      wHtml+='<div class="wb'+(rev?' c':'')+'">'+( rev&&w[wi]?w[wi]:'')+' </div>';
     }
     wRow.innerHTML=wHtml;
   }
