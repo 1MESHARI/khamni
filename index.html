@@ -989,8 +989,32 @@ function submitGuess(){
     checkRnd(st);return;
   }
   setM('mMsg',pts>0?'+'+pts+' نقطة':'لا توجد حروف صح',pts>0?'g':'');
+  // Draw history with colors IMMEDIATELY before saving
+  var hElNow=document.getElementById('hEl');
+  if(hElNow){
+    var hHtmlNow='';
+    for(var hni=0;hni<lHist.length;hni++){
+      var ghn=lHist[hni];
+      hHtmlNow+='<div class="hrow">';
+      var gln=[...ghn.g];
+      for(var gin=0;gin<gln.length;gin++){
+        hHtmlNow+='<div class="hb '+(ghn.r&&ghn.r[gin]?ghn.r[gin]:'w')+'">'+gln[gin]+'</div>';
+      }
+      hHtmlNow+='</div>';
+    }
+    hElNow.innerHTML=hHtmlNow;
+  }
+  // Update word boxes with revealed correct letters
+  var wLenNow=parseInt(st.cLen)||5;
+  var wNow=(st.cW&&st.cW.length>0)?[...st.cW]:[];
+  var wHtmlNow='';
+  for(var wni=0;wni<wLenNow;wni++){
+    var revNow=wNow.length>wni&&lHist.some(function(g){return g.r&&g.r[wni]==='c';});
+    wHtmlNow+='<div class="wb'+(revNow?' c':'')+'">'+( revNow&&wNow[wni]?wNow[wni]:'')+' </div>';
+  }
+  var wRowNow=document.getElementById('wRow');
+  if(wRowNow)wRowNow.innerHTML=wHtmlNow;
   saveR(st);gState=st;
-  drawGame();
 }
 function checkRnd(st){
   var n=st.players.length;
