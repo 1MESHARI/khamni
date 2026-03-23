@@ -981,11 +981,19 @@ function submitGuess(){
   if(won){
     st.rPts[myIdx]+=10;st.players[myIdx].wins=(st.players[myIdx].wins||0)+1;
     if(st.winner===null||st.winner===undefined)st.winner=myIdx;
-    st.done.push(myIdx);setM('mMsg','🎉 خمّنتها! +'+st.rPts[myIdx]+' نقطة','g');
+    st.done.push(myIdx);
+    setM('mMsg','🎉 خمّنتها! +'+st.rPts[myIdx]+' نقطة — انتظر الآخرين...','g');
+    // Draw history immediately
+    var hWon=document.getElementById('hEl');
+    if(hWon){var hWonHtml='';for(var hwi=0;hwi<lHist.length;hwi++){var ghw=lHist[hwi];hWonHtml+='<div class="hrow">';var glw=[...ghw.g];for(var giw=0;giw<glw.length;giw++){hWonHtml+='<div class="hb '+(ghw.r&&ghw.r[giw]?ghw.r[giw]:'w')+'">'+glw[giw]+'</div>';}hWonHtml+='</div>';}hWon.innerHTML=hWonHtml;}
+    // Disable input
+    var gWon=document.getElementById('gI');if(gWon){gWon.disabled=true;gWon.style.opacity='.4';}
     checkRnd(st);return;
   }
   if(out){
-    st.done.push(myIdx);setM('mMsg','انتهت محاولاتك! الكلمة: '+st.cW,'b');
+    st.done.push(myIdx);
+    setM('mMsg','انتهت محاولاتك! الكلمة: '+st.cW+' — انتظر الآخرين...','b');
+    var gOut=document.getElementById('gI');if(gOut){gOut.disabled=true;gOut.style.opacity='.4';}
     checkRnd(st);return;
   }
   setM('mMsg',pts>0?'+'+pts+' نقطة':'لا توجد حروف صح',pts>0?'g':'');
@@ -1081,6 +1089,12 @@ function drawGame(){
   else if(st.cW&&st.cW.length>0)wLen=[...st.cW].length;
   if(!wLen||wLen<4||wLen>6)wLen=5;
   var w=(st.cW&&st.cW.length>0)?[...st.cW]:[];
+  // Always ensure wRow has correct number of boxes
+  var wRowCheck=document.getElementById('wRow');
+  if(wRowCheck&&(!wRowCheck.children||wRowCheck.children.length!==safeLen)){
+    var initB='';for(var ib=0;ib<safeLen;ib++)initB+='<div class="wb"> </div>';
+    wRowCheck.innerHTML=initB;
+  }
   // Score grid
   var sg=document.getElementById('sGrid');
   if(sg){
