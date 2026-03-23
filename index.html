@@ -967,8 +967,9 @@ function submitGuess(){
   if(!gState||gState.phase!=='play'){toast('اللعبة لم تبدأ بعد!');return;}
   if(myIdx<0){toast('خطأ: لاعب غير معروف');return;}
   if(gState.done&&gState.done.indexOf(myIdx)>=0){toast('انتهيت من هذه الجولة!');return;}
-  var st=readS();if(!st){toast('خطأ في الاتصال');return;}
-  if(!st.cW||st.cW.length===0){toast('الكلمة لم تصل، أعد المحاولة');renderGUI();return;}
+  // Use gState directly - more reliable than readS()
+  var st=JSON.parse(JSON.stringify(gState));
+  if(!st.cW||st.cW.length===0){toast('الكلمة لم تصل، أعد المحاولة');return;}
   var v=document.getElementById('gI').value.trim();if(!v)return;
   var wlen=st.cLen||5;
   if([...v].length!==wlen){setM('mMsg','الكلمة يجب أن تكون '+wlen+' حروف!','b');return;}
@@ -1050,7 +1051,7 @@ function toggleKB(id){
 function drawGame(){
   var st=gState;
   if(!st)return;
-  var myDone=st.done&&st.done.indexOf(myIdx)>=0;
+  var myDone=st.done&&Array.isArray(st.done)&&st.done.indexOf(myIdx)>=0;
   var wLen=5;
   if(st.cLen)wLen=parseInt(st.cLen);
   else if(st.cW&&st.cW.length>0)wLen=[...st.cW].length;
