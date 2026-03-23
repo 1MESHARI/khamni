@@ -986,6 +986,11 @@ function submitGuess(){
     // Draw history immediately
     var hWon=document.getElementById('hEl');
     if(hWon){var hWonHtml='';for(var hwi=0;hwi<lHist.length;hwi++){var ghw=lHist[hwi];hWonHtml+='<div class="hrow">';var glw=[...ghw.g];for(var giw=0;giw<glw.length;giw++){hWonHtml+='<div class="hb '+(ghw.r&&ghw.r[giw]?ghw.r[giw]:'w')+'">'+glw[giw]+'</div>';}hWonHtml+='</div>';}hWon.innerHTML=hWonHtml;}
+    // Show all word boxes as correct (blue)
+    var wWon=document.getElementById('wRow');
+    if(wWon&&st.cW){var wWonH='';var wArr=[...st.cW];for(var wwi=0;wwi<wArr.length;wwi++)wWonH+='<div class="wb c">'+wArr[wwi]+'</div>';wWon.innerHTML=wWonH;}
+    // Show win message big
+    setM('mMsg','🎉 أحسنت! الكلمة: '+st.cW,'g');
     // Disable input
     var gWon=document.getElementById('gI');if(gWon){gWon.disabled=true;gWon.style.opacity='.4';}
     checkRnd(st);return;
