@@ -934,11 +934,12 @@ function startRnd(st){
 function renderGUI(){
   if(!gState)return;var st=gState,n=st.players.length;
   var myDone=st.done.indexOf(myIdx)>=0;
-  // Always draw word boxes immediately
+  // Draw empty word boxes using cLen
   var wlen=st.cLen||5;
   var boxes='';
   for(var i=0;i<wlen;i++)boxes+='<div class="wb"></div>';
   document.getElementById('wRow').innerHTML=boxes;
+  // Will be updated by renderB below
   var g=document.getElementById('sGrid');g.className='sgrid n'+n;
   var gh='';
   for(var i=0;i<n;i++){
