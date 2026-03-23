@@ -1041,10 +1041,29 @@ function submitGuess(){
   }
   setM('mMsg',pts>0?'+'+pts+' نقطة':'لا توجد حروف صح',pts>0?'g':'');
   saveR(st);gState=st;
-  // Force local render immediately
-  lHist=st.guesses[myIdx]?st.guesses[myIdx].slice():lHist;
-  lUsed=bUsed(lHist);
-  renderGUI();
+  // Draw history with colors immediately
+  var hEl3=document.getElementById('hEl');
+  var hHtml3='';
+  for(var hi3=0;hi3<lHist.length;hi3++){
+    var gh3=lHist[hi3];
+    hHtml3+='<div class="hrow">';
+    var gl3=[...gh3.g];
+    for(var gi3=0;gi3<gl3.length;gi3++){
+      hHtml3+='<div class="hb '+(gh3.r&&gh3.r[gi3]?gh3.r[gi3]:'w')+'">'+gl3[gi3]+'</div>';
+    }
+    hHtml3+='</div>';
+  }
+  if(hEl3)hEl3.innerHTML=hHtml3;
+  // Update word boxes with revealed letters
+  var wLen3=parseInt(st.cLen)||5;
+  var w3=(st.cW&&st.cW.length>0)?[...st.cW]:[];
+  var wHtml3='';
+  for(var wi3=0;wi3<wLen3;wi3++){
+    var rev3=w3.length>wi3&&lHist.length>0&&lHist.some(function(g){return g.r&&g.r[wi3]==='c';});
+    wHtml3+='<div class="wb'+(rev3?' c':'')+'">'+( rev3?w3[wi3]:'')+' </div>';
+  }
+  var wRow3=document.getElementById('wRow');
+  if(wRow3)wRow3.innerHTML=wHtml3;
 }
 function checkRnd(st){
   var n=st.players.length;
