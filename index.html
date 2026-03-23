@@ -106,7 +106,7 @@ body.dk .sh{background:linear-gradient(135deg,#062033,#031525);}
 .svn{font-size:18px;font-weight:800;color:#fff;}
 .svl{font-size:9px;color:rgba(255,255,255,.75);}
 .srb{background:rgba(255,255,255,.2);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;color:#fff;white-space:nowrap;}
-.sb{flex:1;overflow-y:auto;padding:.5rem .75rem;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;}
+.sb{flex:1;overflow-y:auto;padding:.4rem .6rem;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;}
 
 /* WORD BOXES */
 .wr{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:.5rem 0;}
@@ -195,7 +195,7 @@ body.dk .sc3{background:rgba(14,165,233,.1);border-color:rgba(14,165,233,.2);}
 .sp3{font-size:17px;font-weight:800;color:#fff;}
 .sw3{font-size:9px;color:rgba(255,255,255,.65);}
 .rl{font-size:11px;color:rgba(255,255,255,.75);text-align:center;margin-top:7px;}
-.gbody{flex:1;overflow-y:auto;padding:.5rem .75rem;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;}
+.gbody{flex:1;overflow-y:auto;padding:.4rem .6rem;display:flex;flex-direction:column;max-width:480px;width:100%;margin:0 auto;}
 .tb3{display:flex;align-items:center;justify-content:space-between;background:var(--sf);border:1.5px solid var(--brd);border-radius:var(--r);padding:8px 14px;margin-bottom:.5rem;box-shadow:var(--shs);}
 .tw{font-weight:700;font-size:14px;color:var(--skd);}
 .ta{font-size:11px;color:var(--tx2);}
@@ -261,6 +261,16 @@ body.dk .lrp{color:#38bdf8;}
 #toast.on{transform:translateX(-50%) translateY(0);}
 body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
 
+.kb{background:var(--sf2);border-top:1px solid var(--brd);padding:4px 3px 6px;max-width:480px;width:100%;margin:0 auto;flex-shrink:0;}
+.kbr{display:flex;justify-content:center;gap:2px;margin-bottom:2px;}
+.kk{min-width:25px;height:30px;padding:0 2px;border-radius:4px;border:1px solid var(--brd);background:var(--sf);color:var(--tx);font-size:13px;font-weight:700;font-family:'Tajawal',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;user-select:none;}
+.kk:active{background:var(--slt);transform:scale(.9);}
+.kk.c{background:#0ea5e9;color:#fff;border-color:#0ea5e9;}
+.kk.x{background:var(--amb);color:#fff;border-color:var(--amb);}
+.kk.w{background:var(--sf2);color:var(--txd);}
+.kk.wd{min-width:36px;font-size:11px;}
+.kk.sub{background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border-color:#0284c7;min-width:44px;}
+.kbtoggle{width:100%;padding:4px;text-align:center;font-size:11px;color:var(--tx2);background:var(--sf2);border:none;border-top:1px solid var(--brd);cursor:pointer;font-family:'Tajawal',sans-serif;}
 .av0{background:#0ea5e9;}.av1{background:#8b5cf6;}.av2{background:#f59e0b;}.av3{background:#10b981;}
 </style>
 </head>
@@ -338,7 +348,7 @@ body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
     <div class="hr" id="sHist"></div>
     <div class="ml" id="sMsg"></div>
     <div class="ir">
-      <input class="gi" id="sInp" placeholder="اكتب الكلمة هنا..." maxlength="5" autocomplete="off" inputmode="text">
+      <input class="gi" id="sInp" placeholder="اكتب الكلمة هنا..." maxlength="5" autocomplete="off">
       <button class="gb" onclick="soloGuess()">✓</button>
     </div>
     <div class="lgr">
@@ -347,6 +357,8 @@ body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
       <div class="lg"><div class="lgd" style="background:var(--sf2);border:1px solid var(--brd)"></div>غلط</div>
     </div>
   </div>
+  <button class="kbtoggle" onclick="toggleKB('sKb')">⌨️ إظهار/إخفاء لوحة المفاتيح</button>
+  <div class="kb" id="sKb" style="display:none"></div>
 </div>
 
 <!-- SOLO END -->
@@ -429,7 +441,7 @@ body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
       <div class="hr" id="hEl"></div>
       <div class="ml" id="mMsg"></div>
       <div class="ir">
-        <input class="gi" id="gI" placeholder="اكتب الكلمة هنا..." maxlength="5" autocomplete="off" inputmode="text">
+        <input class="gi" id="gI" placeholder="اكتب الكلمة هنا..." maxlength="5" autocomplete="off">
         <button class="gb" onclick="submitGuess()">✓</button>
       </div>
       <div class="lgr">
@@ -444,6 +456,8 @@ body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
       <div class="ws2">يخمّنون الكلمة الآن</div>
     </div>
   </div>
+  <button class="kbtoggle" onclick="toggleKB('mKb')">⌨️ إظهار/إخفاء لوحة المفاتيح</button>
+  <div class="kb" id="mKb" style="display:none"></div>
 </div>
 
 <!-- END -->
@@ -936,7 +950,7 @@ function renderGUI(){
     var left=n-st.done.length;
     document.getElementById('wW').textContent=left>0?'في انتظار '+left+' لاعب...':'انتهت الجولة!';
   }else{
-    mt.style.display='block';wt2.style.display='none';if(mk)mk.style.display='block';
+    mt.style.display='block';wt2.style.display='none';
     document.getElementById('gI').dataset.mx=st.cLen||5;
     renderB();
   }
@@ -1016,6 +1030,17 @@ function renderRes(st){
     h+='<div class="rc'+(ch?' ch':'')+'"> '+(ch?'<div class="rcr">👑</div>':'')+'<div class="rcn">'+p.name+'</div><div class="rcp">'+p.score+'</div>'+pb+'<div class="rcw">🎯 '+p.wins+' جولات</div></div>';
   }
   document.getElementById('resG').innerHTML=h;
+}
+
+// ── KEYBOARD TOGGLE ──
+function toggleKB(id){
+  var kb=document.getElementById(id);if(!kb)return;
+  var showing=kb.style.display!=='none';
+  kb.style.display=showing?'none':'block';
+  if(!showing){
+    if(id==='sKb')buildKB('sKb','sInp',sUL);
+    else buildKB('mKb','gI',lUsed);
+  }
 }
 
 // ── UTILS ──
