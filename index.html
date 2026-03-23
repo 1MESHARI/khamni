@@ -953,14 +953,19 @@ function renderGUI(){
   document.getElementById('tbW').textContent=myDone?'⏳ في انتظار الآخرين...':'⭐ خمّن الكلمة!';
   document.getElementById('tbA').textContent='المحاولة '+Math.min(mg.length+1,6)+'/6';
   var mt=document.getElementById('myT'),wt2=document.getElementById('wT'),mk=document.getElementById('mKb');
+  // Always show word boxes
+  mt.style.display='block';
+  wt2.style.display='none';
+  document.getElementById('gI').dataset.mx=st.cLen||5;
+  renderB();
   if(myDone){
-    mt.style.display='none';wt2.style.display='flex';if(mk)mk.style.display='none';
-    var left=n-st.done.length;
-    document.getElementById('wW').textContent=left>0?'في انتظار '+left+' لاعب...':'انتهت الجولة!';
+    document.getElementById('gI').disabled=true;
+    document.getElementById('gI').style.opacity='.4';
+    document.getElementById('gI').placeholder='⏳ انتظر الآخرين...';
   }else{
-    mt.style.display='block';wt2.style.display='none';
-    document.getElementById('gI').dataset.mx=st.cLen||5;
-    renderB();
+    document.getElementById('gI').disabled=false;
+    document.getElementById('gI').style.opacity='1';
+    document.getElementById('gI').placeholder='اكتب الكلمة...';
   }
 }
 function renderB(){
