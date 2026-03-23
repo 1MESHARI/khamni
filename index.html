@@ -427,7 +427,10 @@ body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
 <!-- GAME -->
 <div id="s3" class="S col">
   <div class="gt">
-    <div class="sgrid n4" id="sGrid"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+      <div class="sgrid n4" id="sGrid" style="flex:1"></div>
+      <button onclick="goHome()" style="background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);color:#fff;border-radius:20px;padding:4px 10px;font-size:12px;font-weight:700;font-family:Tajawal,sans-serif;cursor:pointer;white-space:nowrap;margin-right:6px">خروج</button>
+    </div>
     <div class="rl" id="rLbl"></div>
   </div>
   <div class="gbody">
@@ -436,17 +439,17 @@ body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
       <span class="ta" id="tbA">المحاولة 1/6</span>
     </div>
     <div id="myT">
-      <div class="wr" id="wRow"></div>
+      <div class="wr" id="wRow" style="min-height:60px"></div>
       <div class="ul2" id="uLet"></div>
       <div class="hr" id="hEl"></div>
       <div class="ml" id="mMsg"></div>
       <div class="ir">
-        <input class="gi" id="gI" placeholder="اكتب الكلمة هنا..." maxlength="5" autocomplete="off">
+        <input class="gi" id="gI" placeholder="اكتب الكلمة..." maxlength="5" autocomplete="off">
         <button class="gb" onclick="submitGuess()">✓</button>
       </div>
       <div class="lgr">
-        <div class="lg"><div class="lgd" style="background:#0ea5e9"></div>صح ومكانه صح</div>
-        <div class="lg"><div class="lgd" style="background:#f59e0b"></div>صح ومكانه غلط</div>
+        <div class="lg"><div class="lgd" style="background:#0ea5e9"></div>صح+مكانه</div>
+        <div class="lg"><div class="lgd" style="background:#f59e0b"></div>صح بس مكانه غلط</div>
         <div class="lg"><div class="lgd" style="background:var(--sf2);border:1px solid var(--brd)"></div>غلط</div>
       </div>
     </div>
