@@ -901,7 +901,7 @@ function onState(st){
     go('s3');
     lHist=(st.guesses&&st.guesses[myIdx])?st.guesses[myIdx].slice():[];
     lUsed=bUsed(lHist);
-    drawGame();return;
+    setTimeout(function(){drawGame();},50);return;
   }
   if(st.phase==='rend'){showREnd(st);return;}
   if(st.phase==='over'){showOver(st);return;}
@@ -1040,7 +1040,7 @@ function toggleKB(id){
 // ── DRAW GAME ──
 function drawGame(){
   var st=gState;
-  if(!st||!document.getElementById('s3').classList.contains('on'))return;
+  if(!st)return;
   var myDone=st.done&&st.done.indexOf(myIdx)>=0;
   var wLen=5;
   if(st.cLen)wLen=parseInt(st.cLen);
