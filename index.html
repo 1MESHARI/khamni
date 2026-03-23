@@ -261,16 +261,7 @@ body.dk .lrp{color:#38bdf8;}
 #toast.on{transform:translateX(-50%) translateY(0);}
 body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
 
-.kb{background:var(--sf2);border-top:1px solid var(--brd);padding:4px 3px 6px;max-width:480px;width:100%;margin:0 auto;flex-shrink:0;}
-.kbr{display:flex;justify-content:center;gap:2px;margin-bottom:2px;}
-.kk{min-width:25px;height:30px;padding:0 2px;border-radius:4px;border:1px solid var(--brd);background:var(--sf);color:var(--tx);font-size:13px;font-weight:700;font-family:'Tajawal',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;user-select:none;}
-.kk:active{background:var(--slt);transform:scale(.9);}
-.kk.c{background:#0ea5e9;color:#fff;border-color:#0ea5e9;}
-.kk.x{background:var(--amb);color:#fff;border-color:var(--amb);}
-.kk.w{background:var(--sf2);color:var(--txd);}
-.kk.wd{min-width:36px;font-size:11px;}
-.kk.sub{background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;border-color:#0284c7;min-width:44px;}
-.kbtoggle{width:100%;padding:4px;text-align:center;font-size:11px;color:var(--tx2);background:var(--sf2);border:none;border-top:1px solid var(--brd);cursor:pointer;font-family:'Tajawal',sans-serif;}
+
 .av0{background:#0ea5e9;}.av1{background:#8b5cf6;}.av2{background:#f59e0b;}.av3{background:#10b981;}
 </style>
 </head>
@@ -357,8 +348,6 @@ body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
       <div class="lg"><div class="lgd" style="background:var(--sf2);border:1px solid var(--brd)"></div>غلط</div>
     </div>
   </div>
-  <button class="kbtoggle" onclick="toggleKB('sKb')">⌨️ إظهار/إخفاء لوحة المفاتيح</button>
-  <div class="kb" id="sKb" style="display:none"></div>
 </div>
 
 <!-- SOLO END -->
@@ -459,8 +448,6 @@ body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
       <div class="ws2">يخمّنون الكلمة الآن</div>
     </div>
   </div>
-  <button class="kbtoggle" onclick="toggleKB('mKb')">⌨️ إظهار/إخفاء لوحة المفاتيح</button>
-  <div class="kb" id="mKb" style="display:none"></div>
 </div>
 
 <!-- END -->
@@ -912,57 +899,9 @@ function onState(st){
   if(st.phase==='wait'){if(document.getElementById('s2w').classList.contains('on'))renderWait();else showWait();return;}
   if(st.phase==='play'){
     go('s3');
-    // Get my data
-    var myDone2=st.done&&st.done.indexOf(myIdx)>=0;
     lHist=(st.guesses&&st.guesses[myIdx])?st.guesses[myIdx].slice():[];
     lUsed=bUsed(lHist);
-    // Word length
-    var wLen2=parseInt(st.cLen)||5;
-    // Draw score boxes
-    var sg=document.getElementById('sGrid');
-    sg.className='sgrid n'+st.players.length;
-    var sgh='';
-    for(var si=0;si<st.players.length;si++){
-      var sp=st.players[si];
-      sgh+='<div class="sc3'+(st.winner===si?' win':'')+(si===myIdx?' me':'')+'"><div class="sn3">'+sp.name+'</div><div class="sp3">'+sp.score+'</div><div class="sw3">🎯'+sp.wins+'</div></div>';
-    }
-    sg.innerHTML=sgh;
-    document.getElementById('rLbl').textContent='الجولة '+st.rnd+' · فوز بـ '+st.wt;
-    // Draw word boxes
-    var wRow2=document.getElementById('wRow');
-    var w2=(st.cW&&st.cW.length>0)?[...st.cW]:[];
-    var wHtml='';
-    for(var wi=0;wi<wLen2;wi++){
-      var rev2=w2.length>wi&&lHist.length>0&&lHist.some(function(g){return g.r&&g.r[wi]==='c';});
-      wHtml+='<div class="wb'+(rev2?' c':'')+'">'+( rev2?w2[wi]:'')+' </div>';
-    }
-    wRow2.innerHTML=wHtml;
-    // Draw history
-    var hEl2=document.getElementById('hEl');
-    var hHtml2='';
-    for(var hi2=0;hi2<lHist.length;hi2++){
-      var gh2=lHist[hi2];
-      hHtml2+='<div class="hrow">';
-      var gl2=[...gh2.g];
-      for(var gi2=0;gi2<gl2.length;gi2++){
-        hHtml2+='<div class="hb '+(gh2.r&&gh2.r[gi2]?gh2.r[gi2]:'w')+'">'+gl2[gi2]+'</div>';
-      }
-      hHtml2+='</div>';
-    }
-    hEl2.innerHTML=hHtml2;
-    // Show/hide turn banner
-    document.getElementById('tbW').textContent=myDone2?'⏳ انتظر الآخرين...':'⭐ خمّن الكلمة!';
-    document.getElementById('tbA').textContent='المحاولة '+(lHist.length+1)+'/6';
-    // Enable/disable input
-    var gEl2=document.getElementById('gI');
-    gEl2.dataset.mx=wLen2;
-    gEl2.disabled=myDone2;
-    gEl2.style.opacity=myDone2?'.4':'1';
-    gEl2.placeholder=myDone2?'⏳ انتظر الآخرين...':'اكتب الكلمة...';
-    // Show myT always
-    document.getElementById('myT').style.display='block';
-    document.getElementById('wT').style.display='none';
-    return;
+    drawGame();return;
   }
   if(st.phase==='rend'){showREnd(st);return;}
   if(st.phase==='over'){showOver(st);return;}
@@ -1041,29 +980,7 @@ function submitGuess(){
   }
   setM('mMsg',pts>0?'+'+pts+' نقطة':'لا توجد حروف صح',pts>0?'g':'');
   saveR(st);gState=st;
-  // Draw history with colors immediately
-  var hEl3=document.getElementById('hEl');
-  var hHtml3='';
-  for(var hi3=0;hi3<lHist.length;hi3++){
-    var gh3=lHist[hi3];
-    hHtml3+='<div class="hrow">';
-    var gl3=[...gh3.g];
-    for(var gi3=0;gi3<gl3.length;gi3++){
-      hHtml3+='<div class="hb '+(gh3.r&&gh3.r[gi3]?gh3.r[gi3]:'w')+'">'+gl3[gi3]+'</div>';
-    }
-    hHtml3+='</div>';
-  }
-  if(hEl3)hEl3.innerHTML=hHtml3;
-  // Update word boxes with revealed letters
-  var wLen3=parseInt(st.cLen)||5;
-  var w3=(st.cW&&st.cW.length>0)?[...st.cW]:[];
-  var wHtml3='';
-  for(var wi3=0;wi3<wLen3;wi3++){
-    var rev3=w3.length>wi3&&lHist.length>0&&lHist.some(function(g){return g.r&&g.r[wi3]==='c';});
-    wHtml3+='<div class="wb'+(rev3?' c':'')+'">'+( rev3?w3[wi3]:'')+' </div>';
-  }
-  var wRow3=document.getElementById('wRow');
-  if(wRow3)wRow3.innerHTML=wHtml3;
+  drawGame();
 }
 function checkRnd(st){
   var n=st.players.length;
@@ -1118,6 +1035,72 @@ function toggleKB(id){
     if(id==='sKb')buildKB('sKb','sInp',sUL);
     else buildKB('mKb','gI',lUsed);
   }
+}
+
+// ── DRAW GAME ──
+function drawGame(){
+  var st=gState;
+  if(!st||!document.getElementById('s3').classList.contains('on'))return;
+  var myDone=st.done&&st.done.indexOf(myIdx)>=0;
+  var wLen=parseInt(st.cLen)||5;
+  var w=(st.cW&&st.cW.length>0)?[...st.cW]:[];
+  // Score grid
+  var sg=document.getElementById('sGrid');
+  if(sg){
+    sg.className='sgrid n'+st.players.length;
+    var sgh='';
+    for(var si=0;si<st.players.length;si++){
+      var sp=st.players[si];var pd=st.rPts&&st.rPts[si]?st.rPts[si]:0;
+      sgh+='<div class="sc3'+(st.winner===si?' win':'')+(si===myIdx?' me':'')+'"><div class="sn3">'+sp.name+'</div><div class="sp3">'+sp.score+(pd?'<span style="font-size:9px;color:#fbbf24"> (+'+pd+')</span>':'')+'</div><div class="sw3">🎯'+sp.wins+'</div></div>';
+    }
+    sg.innerHTML=sgh;
+  }
+  var rl=document.getElementById('rLbl');
+  if(rl)rl.textContent='الجولة '+st.rnd+' · فوز بـ '+st.wt+' جولات · '+st.done.length+'/'+st.players.length+' انتهوا';
+  // Word boxes
+  var wRow=document.getElementById('wRow');
+  if(wRow){
+    var wHtml='';
+    for(var wi=0;wi<wLen;wi++){
+      var rev=w.length>wi&&lHist.length>0&&lHist.some(function(g){return g.r&&g.r[wi]==='c';});
+      wHtml+='<div class="wb'+(rev?' c':'')+'">'+( rev?w[wi]:'')+' </div>';
+    }
+    wRow.innerHTML=wHtml;
+  }
+  // History
+  var hEl=document.getElementById('hEl');
+  if(hEl){
+    var hHtml='';
+    for(var hi=0;hi<lHist.length;hi++){
+      var gh=lHist[hi];
+      hHtml+='<div class="hrow">';
+      var gl=[...gh.g];
+      for(var gi=0;gi<gl.length;gi++){
+        hHtml+='<div class="hb '+(gh.r&&gh.r[gi]?gh.r[gi]:'w')+'">'+gl[gi]+'</div>';
+      }
+      hHtml+='</div>';
+    }
+    hEl.innerHTML=hHtml;
+  }
+  // Turn banner
+  var tbW=document.getElementById('tbW');
+  if(tbW)tbW.textContent=myDone?'⏳ انتظر الآخرين...':'⭐ خمّن الكلمة!';
+  var tbA=document.getElementById('tbA');
+  if(tbA)tbA.textContent='المحاولة '+(lHist.length+1)+'/6';
+  // Input
+  var gEl=document.getElementById('gI');
+  if(gEl){
+    gEl.dataset.mx=wLen;
+    gEl.disabled=myDone;
+    gEl.style.opacity=myDone?'.4':'1';
+    if(myDone)gEl.placeholder='⏳ انتظر الآخرين...';
+    else if(gEl.placeholder==='⏳ انتظر الآخرين...')gEl.placeholder='اكتب الكلمة...';
+  }
+  // Show myT always
+  var mt=document.getElementById('myT');
+  if(mt)mt.style.display='block';
+  var wt2=document.getElementById('wT');
+  if(wt2)wt2.style.display='none';
 }
 
 // ── UTILS ──
