@@ -439,7 +439,7 @@ body.dk #toast{background:#031525;border:1px solid #0ea5e9;}
       <span class="ta" id="tbA">المحاولة 1/6</span>
     </div>
     <div id="myT">
-      <div class="wr" id="wRow" style="min-height:60px"></div>
+      <div class="wr" id="wRow" style="min-height:60px"><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
       <div class="ul2" id="uLet"></div>
       <div class="hr" id="hEl"></div>
       <div class="ml" id="mMsg"></div>
@@ -934,12 +934,14 @@ function startRnd(st){
 function renderGUI(){
   if(!gState)return;var st=gState,n=st.players.length;
   var myDone=st.done.indexOf(myIdx)>=0;
-  // Draw empty word boxes using cLen
-  var wlen=st.cLen||5;
-  var boxes='';
-  for(var i=0;i<wlen;i++)boxes+='<div class="wb"></div>';
-  document.getElementById('wRow').innerHTML=boxes;
-  // Will be updated by renderB below
+  // Draw empty word boxes
+  var wlen2=5;
+  if(st.cLen&&st.cLen>0)wlen2=st.cLen;
+  else if(st.cW&&st.cW.length>0)wlen2=[...st.cW].length;
+  var boxes2='';
+  for(var i=0;i<wlen2;i++)boxes2+='<div class="wb"></div>';
+  var wre=document.getElementById('wRow');
+  if(wre)wre.innerHTML=boxes2;
   var g=document.getElementById('sGrid');g.className='sgrid n'+n;
   var gh='';
   for(var i=0;i<n;i++){
