@@ -643,16 +643,24 @@ function getLBL(){try{return JSON.parse(localStorage.getItem('klb')||'[]');}catc
 function saveLBL(lb){localStorage.setItem('klb',JSON.stringify(lb));}
 function recordSession(name,pts,wins){
   var lb=getLBL();var ex=null;
-  for(var i=0;i<lb.length;i++){if(lb[i].name===name){ex=lb[i];break;}}
+  // Use deviceId as key to prevent duplicate names
+  var deviceKey=myId;
+  for(var i=0;i<lb.length;i++){if(lb[i].uid===deviceKey){ex=lb[i];break;}}
   var nb=false;
-  if(ex){if(pts>ex.best){ex.best=pts;nb=true;}ex.total=(ex.total||0)+pts;ex.wins=(ex.wins||0)+wins;ex.games=(ex.games||0)+1;}
-  else{lb.push({name:name,best:pts,total:pts,wins:wins,games:1});nb=true;}
+  if(ex){
+    ex.name=name; // Update name if changed
+    if(pts>ex.best){ex.best=pts;nb=true;}
+    ex.total=(ex.total||0)+pts;ex.wins=(ex.wins||0)+wins;ex.games=(ex.games||0)+1;
+  }else{
+    lb.push({uid:deviceKey,name:name,best:pts,total:pts,wins:wins,games:1});nb=true;
+  }
   lb.sort(function(a,b){return b.total-a.total;});saveLBL(lb.slice(0,20));
   if(FBok&&DB){
-    var key=name.replace(/[.#$\[\]\/]/g,'_');
+    var key=deviceKey;
     DB.ref('lb/'+key).once('value').then(function(s){
-      var cur=s.val()||{name:name,best:0,total:0,wins:0,games:0};
-      DB.ref('lb/'+key).set({name:name,best:Math.max(cur.best||0,pts),total:(cur.total||0)+pts,wins:(cur.wins||0)+wins,games:(cur.games||0)+1,at:Date.now()});
+      var cur=s.val()||{uid:deviceKey,name:name,best:0,total:0,wins:0,games:0};
+      cur.name=name; // Always update name
+      DB.ref('lb/'+key).set({uid:deviceKey,name:name,best:Math.max(cur.best||0,pts),total:(cur.total||0)+pts,wins:(cur.wins||0)+wins,games:(cur.games||0)+1,at:Date.now()});
     }).catch(function(){});
   }
   return nb;
@@ -746,11 +754,26 @@ function changePw(){var p=document.getElementById('nPw').value.trim();if(!p){toa
 function resetLB(){if(!confirm('مسح لوحة الصدارة؟'))return;localStorage.removeItem('klb');if(FBok&&DB){DB.ref('lb').remove().catch(function(){});}toast('تم المسح ✅');}
 
 // ── NAVIGATION ──
-var myN='',myId='p'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+// ── DEVICE ID + SAVED NAME ──
+function getDeviceId(){
+  var id=localStorage.getItem('kuid');
+  if(!id){id='u'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);localStorage.setItem('kuid',id);}
+  return id;
+}
+var myN='',myId=getDeviceId();
+// Load saved name
+(function(){
+  var saved=localStorage.getItem('kname');
+  if(saved){
+    document.getElementById('pname').value=saved;
+    myN=saved;
+  }
+})();
 function getName(){
   var n=document.getElementById('pname').value.trim();
   if(!n){toast('أدخل اسمك أولاً!');return null;}
   if(n==='Admin123'){loadCW();aTab('w');go('s6');return null;}
+  localStorage.setItem('kname',n);
   return n;
 }
 function goHome(){stopPoll();rCode='';gState=null;lHist=[];lUsed={};go('s0');}
@@ -1133,12 +1156,16 @@ function submitGuess(){
 function checkRnd(st){
   var n=st.players.length;
   if(st.done.length>=n){
-    var ov=false;
-    for(var i=0;i<st.players.length;i++){if(st.players[i].wins>=st.wt){ov=true;break;}}
-    st.phase=ov?'over':'rend';
+    // Add winner score
     if(st.winner!==null&&st.winner!==undefined){
       st.players[st.winner].score=(st.players[st.winner].score||0)+st.rPts[st.winner];
     }
+    // Game over if: current round >= total rounds OR someone reached wt wins
+    var roundsDone=st.rnd>=st.wt;
+    var someoneWon=false;
+    for(var i=0;i<st.players.length;i++){if(st.players[i].wins>=st.wt){someoneWon=true;break;}}
+    var ov=roundsDone||someoneWon;
+    st.phase=ov?'over':'rend';
     saveR(st);gState=st;
     if(st.phase==='rend')setTimeout(function(){showREnd(st);},1000);
     else setTimeout(function(){showOver(st);},1000);
@@ -1155,15 +1182,26 @@ function showREnd(st){
   renderRes(st);
   var b=document.getElementById('endNB');
   var nextRnd=st.rnd+1;
-  b.textContent='الجولة '+nextRnd+' من '+st.wt+' →';
-  b.onclick=function(){
-    if(!isHost){toast('المضيف فقط يمكنه البدء');return;}
-    var s=readS();if(!s)return;s.rnd++;startRnd(s);
-  };
+  if(nextRnd<=st.wt){
+    b.style.display='block';
+    b.textContent='الجولة '+nextRnd+' من '+st.wt+' →';
+    b.onclick=function(){
+      if(!isHost){toast('المضيف فقط يمكنه البدء');return;}
+      var s=readS();if(!s)return;s.rnd++;startRnd(s);
+    };
+  }else{
+    b.style.display='none';
+  }
   go('s3e');
 }
 
 function showOver(st){
+  // Save only the WINNER's score to leaderboard
+  var sorted0=st.players.slice().sort(function(a,b){return b.score-a.score;});
+  var winner0=sorted0[0];
+  if(winner0&&winner0.id===myId&&winner0.score>0){
+    recordSession(winner0.name,winner0.score,winner0.wins);
+  }
   // Sort players by score
   var sorted=st.players.slice().sort(function(a,b){return b.score-a.score;});
   var medals=['🥇','🥈','🥉'];
@@ -1228,6 +1266,10 @@ var tT=null;
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');if(tT)clearTimeout(tT);tT=setTimeout(function(){t.classList.remove('on');},2600);}
 
 document.getElementById('jCode').addEventListener('input',function(){this.value=this.value.toUpperCase();});
+document.getElementById('pname').addEventListener('input',function(){
+  var n=this.value.trim();
+  if(n&&n!=='Admin123')localStorage.setItem('kname',n);
+});
 try{loadCW();}catch(e){}
 </script>
 </body>
