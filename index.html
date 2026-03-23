@@ -897,7 +897,21 @@ function joinRoom(){
   });
 }
 
-function leaveRoom(){stopPoll();rCode='';gState=null;go('s0');}
+function leaveRoom(){
+  if(gState&&rCode&&gState.phase==='play'){
+    // Remove player from active game
+    var st=readS()||gState;
+    if(st&&st.players){
+      st.players=toArr(st.players);
+      // Mark as done so others can continue
+      if(myIdx>=0&&st.done.indexOf(myIdx)<0){
+        st.done.push(myIdx);
+        saveR(st);
+      }
+    }
+  }
+  stopPoll();rCode='';gState=null;go('s0');
+}
 
 function showWait(){
   document.getElementById('dCode').textContent=rCode;
@@ -1137,7 +1151,36 @@ function submitGuess(){
     var gi2=document.getElementById('gI');if(gi2){gi2.disabled=true;gi2.style.opacity='.4';}
     drawHistory(st);
     saveR(st);gState=st;
-    checkRnd(st);return;
+    // Winner goes to next round immediately after 1.5 seconds
+    setTimeout(function(){
+      var fresh=readS()||gState;
+      // Add winner score
+      fresh.players[myIdx].score=(fresh.players[myIdx].score||0)+st.rPts[myIdx];
+      // Check if game over
+      var roundsDone=fresh.rnd>=fresh.wt;
+      var someoneWon=false;
+      for(var i=0;i<fresh.players.length;i++){if(fresh.players[i].wins>=fresh.wt){someoneWon=true;break;}}
+      if(roundsDone||someoneWon){
+        fresh.phase='over';saveR(fresh);gState=fresh;showOver(fresh);
+      }else{
+        // Start next round
+        var wo=getWord();
+        fresh.cW=wo.word;fresh.cLen=wo.len;fresh.rnd++;
+        fresh.phase='play';fresh.guesses={};fresh.rPts={};fresh.done=[];fresh.winner=null;
+        var n=fresh.players.length;
+        for(var i=0;i<n;i++){fresh.guesses[i]=[];fresh.rPts[i]=0;}
+        lHist=[];lUsed={};
+        setM('mMsg','','');
+        var gi3=document.getElementById('gI');
+        if(gi3){gi3.disabled=false;gi3.style.opacity='1';gi3.value='';gi3.placeholder='اكتب الكلمة...';}
+        saveR(fresh);gState=fresh;
+        // Draw new boxes
+        var wr2=document.getElementById('wRow');
+        if(wr2){var bh='';for(var i=0;i<fresh.cLen;i++)bh+='<div class="wb"> </div>';wr2.innerHTML=bh;}
+        drawAll(fresh);
+      }
+    },1500);
+    return;
   }
   if(out){
     st.done.push(myIdx);
@@ -1155,7 +1198,9 @@ function submitGuess(){
 
 function checkRnd(st){
   var n=st.players.length;
-  if(st.done.length>=n){
+  // Count active players (not left)
+  var activePl=st.players.filter(function(p){return !p.left;}).length;
+  if(st.done.length>=activePl||st.done.length>=n){
     // Add winner score
     if(st.winner!==null&&st.winner!==undefined){
       st.players[st.winner].score=(st.players[st.winner].score||0)+st.rPts[st.winner];
