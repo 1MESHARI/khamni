@@ -911,25 +911,58 @@ function onState(st){
   myIdx=-1;for(var i=0;i<st.players.length;i++){if(st.players[i].id===myId){myIdx=i;break;}}
   if(st.phase==='wait'){if(document.getElementById('s2w').classList.contains('on'))renderWait();else showWait();return;}
   if(st.phase==='play'){
-    if(!document.getElementById('s3').classList.contains('on')){
-      go('s3');
-    }
-    lHist=(st.guesses[myIdx]||[]).slice();
+    go('s3');
+    // Get my data
+    var myDone2=st.done&&st.done.indexOf(myIdx)>=0;
+    lHist=(st.guesses&&st.guesses[myIdx])?st.guesses[myIdx].slice():[];
     lUsed=bUsed(lHist);
-    // Draw boxes NOW with correct count
-    var bLen=parseInt(st.cLen)||5;
-    var bHtml='';
-    for(var bi=0;bi<bLen;bi++)bHtml+='<div class="wb"></div>';
-    document.getElementById('wRow').innerHTML=bHtml;
-    // Enable input
-    var gEl=document.getElementById('gI');
-    gEl.dataset.mx=bLen;
-    var isDone=st.done&&st.done.indexOf(myIdx)>=0;
-    gEl.disabled=isDone;
-    gEl.style.opacity=isDone?'.4':'1';
-    gEl.placeholder=isDone?'⏳ انتظر الآخرين...':'اكتب الكلمة...';
-    // Now render full UI
-    renderGUI();return;
+    // Word length
+    var wLen2=parseInt(st.cLen)||5;
+    // Draw score boxes
+    var sg=document.getElementById('sGrid');
+    sg.className='sgrid n'+st.players.length;
+    var sgh='';
+    for(var si=0;si<st.players.length;si++){
+      var sp=st.players[si];
+      sgh+='<div class="sc3'+(st.winner===si?' win':'')+(si===myIdx?' me':'')+'"><div class="sn3">'+sp.name+'</div><div class="sp3">'+sp.score+'</div><div class="sw3">🎯'+sp.wins+'</div></div>';
+    }
+    sg.innerHTML=sgh;
+    document.getElementById('rLbl').textContent='الجولة '+st.rnd+' · فوز بـ '+st.wt;
+    // Draw word boxes
+    var wRow2=document.getElementById('wRow');
+    var w2=(st.cW&&st.cW.length>0)?[...st.cW]:[];
+    var wHtml='';
+    for(var wi=0;wi<wLen2;wi++){
+      var rev2=w2.length>wi&&lHist.length>0&&lHist.some(function(g){return g.r&&g.r[wi]==='c';});
+      wHtml+='<div class="wb'+(rev2?' c':'')+'">'+( rev2?w2[wi]:'')+' </div>';
+    }
+    wRow2.innerHTML=wHtml;
+    // Draw history
+    var hEl2=document.getElementById('hEl');
+    var hHtml2='';
+    for(var hi2=0;hi2<lHist.length;hi2++){
+      var gh2=lHist[hi2];
+      hHtml2+='<div class="hrow">';
+      var gl2=[...gh2.g];
+      for(var gi2=0;gi2<gl2.length;gi2++){
+        hHtml2+='<div class="hb '+(gh2.r&&gh2.r[gi2]?gh2.r[gi2]:'w')+'">'+gl2[gi2]+'</div>';
+      }
+      hHtml2+='</div>';
+    }
+    hEl2.innerHTML=hHtml2;
+    // Show/hide turn banner
+    document.getElementById('tbW').textContent=myDone2?'⏳ انتظر الآخرين...':'⭐ خمّن الكلمة!';
+    document.getElementById('tbA').textContent='المحاولة '+(lHist.length+1)+'/6';
+    // Enable/disable input
+    var gEl2=document.getElementById('gI');
+    gEl2.dataset.mx=wLen2;
+    gEl2.disabled=myDone2;
+    gEl2.style.opacity=myDone2?'.4':'1';
+    gEl2.placeholder=myDone2?'⏳ انتظر الآخرين...':'اكتب الكلمة...';
+    // Show myT always
+    document.getElementById('myT').style.display='block';
+    document.getElementById('wT').style.display='none';
+    return;
   }
   if(st.phase==='rend'){showREnd(st);return;}
   if(st.phase==='over'){showOver(st);return;}
