@@ -913,10 +913,22 @@ function onState(st){
   if(st.phase==='play'){
     if(!document.getElementById('s3').classList.contains('on')){
       go('s3');
-      lHist=(st.guesses[myIdx]||[]).slice();lUsed=bUsed(lHist);
-      
-      document.getElementById('gI').dataset.mx=st.cLen||5;
     }
+    lHist=(st.guesses[myIdx]||[]).slice();
+    lUsed=bUsed(lHist);
+    // Draw boxes NOW with correct count
+    var bLen=parseInt(st.cLen)||5;
+    var bHtml='';
+    for(var bi=0;bi<bLen;bi++)bHtml+='<div class="wb"></div>';
+    document.getElementById('wRow').innerHTML=bHtml;
+    // Enable input
+    var gEl=document.getElementById('gI');
+    gEl.dataset.mx=bLen;
+    var isDone=st.done&&st.done.indexOf(myIdx)>=0;
+    gEl.disabled=isDone;
+    gEl.style.opacity=isDone?'.4':'1';
+    gEl.placeholder=isDone?'⏳ انتظر الآخرين...':'اكتب الكلمة...';
+    // Now render full UI
     renderGUI();return;
   }
   if(st.phase==='rend'){showREnd(st);return;}
