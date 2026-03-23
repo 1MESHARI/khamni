@@ -961,14 +961,12 @@ function renderGUI(){
   wt2.style.display='none';
   document.getElementById('gI').dataset.mx=st.cLen||5;
   renderB();
+  var gi2=document.getElementById('gI');
   if(myDone){
-    document.getElementById('gI').disabled=true;
-    document.getElementById('gI').style.opacity='.4';
-    document.getElementById('gI').placeholder='⏳ انتظر الآخرين...';
+    gi2.disabled=true;gi2.style.opacity='.4';gi2.placeholder='⏳ انتظر الآخرين...';
   }else{
-    document.getElementById('gI').disabled=false;
-    document.getElementById('gI').style.opacity='1';
-    document.getElementById('gI').placeholder='اكتب الكلمة...';
+    gi2.disabled=false;gi2.style.opacity='1';
+    if(!gi2.placeholder||gi2.placeholder==='⏳ انتظر الآخرين...')gi2.placeholder='اكتب الكلمة...';
   }
 }
 function renderB(){
@@ -980,9 +978,11 @@ function renderB(){
   
 }
 function submitGuess(){
-  if(!gState||gState.phase!=='play')return;
-  if(gState.done.indexOf(myIdx)>=0)return;
-  var st=readS();if(!st)return;
+  if(!gState||gState.phase!=='play'){toast('اللعبة لم تبدأ بعد!');return;}
+  if(myIdx<0){toast('خطأ: لاعب غير معروف');return;}
+  if(gState.done&&gState.done.indexOf(myIdx)>=0){toast('انتهيت من هذه الجولة!');return;}
+  var st=readS();if(!st){toast('خطأ في الاتصال');return;}
+  if(!st.cW||st.cW.length===0){toast('الكلمة لم تصل بعد، انتظر لحظة');return;}
   var v=document.getElementById('gI').value.trim();if(!v)return;
   var wlen=st.cLen||5;
   if([...v].length!==wlen){setM('mMsg','الكلمة يجب أن تكون '+wlen+' حروف!','b');return;}
