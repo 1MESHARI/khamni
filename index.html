@@ -1083,18 +1083,22 @@ function toggleKB(id){
 function drawGame(){
   var st=gState;
   if(!st)return;
+  // Always sync lHist from state
+  if(st.guesses&&st.guesses[myIdx]){
+    var raw=st.guesses[myIdx];
+    if(!Array.isArray(raw)){
+      var arr2=[];var keys2=Object.keys(raw).sort(function(a,b){return a-b;});
+      for(var k=0;k<keys2.length;k++)arr2.push(raw[keys2[k]]);
+      raw=arr2;
+    }
+    lHist=raw;
+  }
   var myDone=st.done&&Array.isArray(st.done)&&st.done.indexOf(myIdx)>=0;
   var wLen=5;
   if(st.cLen)wLen=parseInt(st.cLen);
   else if(st.cW&&st.cW.length>0)wLen=[...st.cW].length;
   if(!wLen||wLen<4||wLen>6)wLen=5;
   var w=(st.cW&&st.cW.length>0)?[...st.cW]:[];
-  // Always ensure wRow has correct number of boxes
-  var wRowCheck=document.getElementById('wRow');
-  if(wRowCheck&&(!wRowCheck.children||wRowCheck.children.length!==safeLen)){
-    var initB='';for(var ib=0;ib<safeLen;ib++)initB+='<div class="wb"> </div>';
-    wRowCheck.innerHTML=initB;
-  }
   // Score grid
   var sg=document.getElementById('sGrid');
   if(sg){
@@ -1142,7 +1146,9 @@ function drawGame(){
   var tbW=document.getElementById('tbW');
   if(tbW)tbW.textContent=myDone?'⏳ انتظر الآخرين...':'⭐ خمّن الكلمة!';
   var tbA=document.getElementById('tbA');
-  if(tbA)tbA.textContent='المحاولة '+(lHist.length+1)+'/6';
+  var attNum=Math.min(lHist.length+1,6);
+  if(myDone)attNum=lHist.length;
+  if(tbA)tbA.textContent='المحاولة '+attNum+'/6';
   // Input
   var gEl=document.getElementById('gI');
   if(gEl){
