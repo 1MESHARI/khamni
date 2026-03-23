@@ -1074,7 +1074,12 @@ function startRnd(st){
   var n=st.players.length;
   st.phase='play';st.guesses={};st.rPts={};st.done=[];st.winner=null;
   for(var i=0;i<n;i++){st.guesses[i]=[];st.rPts[i]=0;}
-  lHist=[];lUsed={};saveR(st);gState=st;
+  lHist=[];lUsed={};
+  // Clear message and input
+  setM('mMsg','','');
+  var gi=document.getElementById('gI');
+  if(gi){gi.disabled=false;gi.style.opacity='1';gi.value='';gi.placeholder='اكتب الكلمة...';}
+  saveR(st);gState=st;
 }
 
 function submitGuess(){
@@ -1145,11 +1150,12 @@ function checkRnd(st){
 function showREnd(st){
   var w=st.winner!==null&&st.winner!==undefined?st.players[st.winner]:null;
   document.getElementById('endTr').textContent=w?'🎉':'🔄';
-  document.getElementById('endTi').textContent=w?'🏆 '+w.name+' خمّنها أول!':'نهاية الجولة '+st.rnd;
+  document.getElementById('endTi').textContent=w?'🏆 '+w.name+' خمّنها أول!':'تعادل في الجولة '+st.rnd;
   document.getElementById('endW').textContent='الكلمة كانت: '+st.cW;
   renderRes(st);
   var b=document.getElementById('endNB');
-  b.textContent='الجولة التالية →';
+  var nextRnd=st.rnd+1;
+  b.textContent='الجولة '+nextRnd+' من '+st.wt+' →';
   b.onclick=function(){
     if(!isHost){toast('المضيف فقط يمكنه البدء');return;}
     var s=readS();if(!s)return;s.rnd++;startRnd(s);
@@ -1158,14 +1164,25 @@ function showREnd(st){
 }
 
 function showOver(st){
-  var mx=0;
-  for(var i=0;i<st.players.length;i++){if(st.players[i].wins>mx)mx=st.players[i].wins;}
-  var ch=null;
-  for(var i=0;i<st.players.length;i++){if(st.players[i].wins===mx){ch=st.players[i];break;}}
+  // Sort players by score
+  var sorted=st.players.slice().sort(function(a,b){return b.score-a.score;});
+  var medals=['🥇','🥈','🥉'];
+  var rankHtml='<div style="text-align:center;padding:1rem 0">';
+  for(var i=0;i<sorted.length;i++){
+    var p=sorted[i];var m=medals[i]||'#'+(i+1);
+    var isMe=p.id===myId;
+    rankHtml+='<div style="display:flex;align-items:center;gap:12px;background:'+(i===0?'rgba(251,191,36,.15)':'var(--sf2)')+';border-radius:12px;padding:12px 16px;margin-bottom:8px;border:1.5px solid '+(i===0?'#f59e0b':'var(--brd)')+';">';
+    rankHtml+='<span style="font-size:24px">'+m+'</span>';
+    rankHtml+='<div style="flex:1;text-align:right"><div style="font-size:16px;font-weight:700;color:var(--tx)">'+p.name+(isMe?' 👤':'')+'</div>';
+    rankHtml+='<div style="font-size:12px;color:var(--tx2)">🎯 '+p.wins+' جولات</div></div>';
+    rankHtml+='<div style="font-size:22px;font-weight:900;color:'+(i===0?'#f59e0b':'var(--sky)')+'">'+p.score+'</div>';
+    rankHtml+='</div>';
+  }
+  rankHtml+='</div>';
   document.getElementById('endTr').textContent='👑';
-  document.getElementById('endTi').textContent=ch?ch.name+' هو البطل!':'';
+  document.getElementById('endTi').textContent='مبروك '+sorted[0].name+'!';
   document.getElementById('endW').textContent='الكلمة الأخيرة: '+st.cW;
-  renderRes(st);
+  document.getElementById('resG').innerHTML=rankHtml;
   var b=document.getElementById('endNB');
   b.textContent='العب مجدداً';
   b.onclick=function(){
