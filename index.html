@@ -899,9 +899,18 @@ function onState(st){
   if(st.phase==='wait'){if(document.getElementById('s2w').classList.contains('on'))renderWait();else showWait();return;}
   if(st.phase==='play'){
     go('s3');
-    lHist=(st.guesses&&st.guesses[myIdx])?st.guesses[myIdx].slice():[];
+    // Firebase stores arrays as objects - convert
+    var myGuesses=[];
+    if(st.guesses){
+      var mg=st.guesses[myIdx]||st.guesses[''+myIdx];
+      if(mg){
+        if(Array.isArray(mg))myGuesses=mg.slice();
+        else myGuesses=Object.values(mg);
+      }
+    }
+    lHist=myGuesses;
     lUsed=bUsed(lHist);
-    setTimeout(function(){drawGame();},50);return;
+    setTimeout(function(){drawGame();},100);return;
   }
   if(st.phase==='rend'){showREnd(st);return;}
   if(st.phase==='over'){showOver(st);return;}
@@ -1067,7 +1076,8 @@ function drawGame(){
     // Force at least 4 boxes
     var safeLen=(wLen>=4&&wLen<=6)?wLen:5;
     for(var wi=0;wi<safeLen;wi++){
-      var rev=w.length>wi&&lHist.length>0&&lHist.some(function(g){return g.r&&g.r[wi]==='c';});
+      var histArr2=Array.isArray(lHist)?lHist:Object.values(lHist||{});
+      var rev=w.length>wi&&histArr2.length>0&&histArr2.some(function(g){if(!g||!g.r)return false;var rr=Array.isArray(g.r)?g.r:Object.values(g.r);return rr[wi]==='c';});
       wHtml+='<div class="wb'+(rev?' c':'')+'">'+( rev&&w[wi]?w[wi]:'')+' </div>';
     }
     wRow.innerHTML=wHtml;
@@ -1076,12 +1086,14 @@ function drawGame(){
   var hEl=document.getElementById('hEl');
   if(hEl){
     var hHtml='';
-    for(var hi=0;hi<lHist.length;hi++){
-      var gh=lHist[hi];
+    var histArr=Array.isArray(lHist)?lHist:Object.values(lHist||{});
+    for(var hi=0;hi<histArr.length;hi++){
+      var gh=histArr[hi];if(!gh||!gh.g)continue;
       hHtml+='<div class="hrow">';
       var gl=[...gh.g];
+      var gr=Array.isArray(gh.r)?gh.r:Object.values(gh.r||{});
       for(var gi=0;gi<gl.length;gi++){
-        hHtml+='<div class="hb '+(gh.r&&gh.r[gi]?gh.r[gi]:'w')+'">'+gl[gi]+'</div>';
+        hHtml+='<div class="hb '+(gr[gi]?gr[gi]:'w')+'">'+gl[gi]+'</div>';
       }
       hHtml+='</div>';
     }
